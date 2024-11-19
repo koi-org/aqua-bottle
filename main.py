@@ -24,11 +24,12 @@ async def send_message(message: Message, user_message: str) -> None:
     if is_private := user_message[0] == '?':
         user_message = user_message[1:]
 
-    try:
-        response: str = get_response(user_message)
-        await message.author.send(response) if is_private else await message.channel.send(response)
-    except Exception as e:
-        print(e)
+    elif user_message[0] == '!':
+        try:
+            response: str = get_response(user_message)
+            await message.author.send(response) if is_private else await message.channel.send(response)
+        except Exception as e:
+            print(e)
 
 # STEP 3: HANDLING THE STARTUP FOR OUR BOT
 @client.event
@@ -38,7 +39,7 @@ async def on_ready() -> None:
 # STEP 4: HANDLING INCOMING MESSAGE
 @client.event
 async def on_message(message: Message) -> None:
-    if message.auther == client.user:
+    if message.author == client.user:
         return
     
     username: str = str(message.author)
@@ -52,5 +53,5 @@ async def on_message(message: Message) -> None:
 def main() -> None:
     client.run(token=TOKEN)
 
-if __name__ == '__main__'"
+if __name__ == '__main__':
     main()
