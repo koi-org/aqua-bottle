@@ -15,6 +15,8 @@ def get_response(user_input: str) -> str:
         return f'You rolled: {randint(1,6)}'
     elif lowered[1:] == 'help':
         return 'This is guppy bot! Your very own aquarist game!'
+    elif 'they call you the what' in lowered:
+        return 'Ninjas call me the drink'
     else:
         return choice(['I do not understand...',
                        'What are you talking about?',
