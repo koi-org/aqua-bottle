@@ -18,9 +18,9 @@ async def send_message(message: Message, user_message: str) -> None:
     if not user_message:
         print('(Message was empty because intents were not enabled probably)')
         return
-    
+
     is_private = user_message[0] == '?'
-    
+
     if is_private := user_message[0] == '?':
         user_message = user_message[1:]
 
@@ -41,7 +41,7 @@ async def on_ready() -> None:
 async def on_message(message: Message) -> None:
     if message.author == client.user:
         return
-    
+
     username: str = str(message.author)
     user_message : str = message.content
     channel: str = str(message.channel)
