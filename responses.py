@@ -16,7 +16,7 @@ def get_response(user_input: str) -> str:
     elif lowered[1:] == 'help':
         return 'This is guppy bot! Your very own aquarist game!'
     elif 'they call you the what' in lowered:
-        return 'Niggas call me the drink'
+        return 'Ninjas call me the drink'
     else:
         return choice(['I do not understand...',
                        'What are you talking about?',
