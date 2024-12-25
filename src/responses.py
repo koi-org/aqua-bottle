@@ -1,6 +1,6 @@
 from random import randint, choice
-from commands import create_aquarium
-from data import data
+from src.commands import create_aquarium
+from src.data import data
 
 valid_commands = {
     'daily', 'start', 'shop', 'help'

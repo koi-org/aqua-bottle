@@ -1,4 +1,4 @@
-from data import data
+from src.data import data
 
 def create_aquarium(data, channel_id): 
     # check if an already existing aquarium exists
