@@ -6,3 +6,4 @@ source venv/bin/activate   # For Linux/macOS
 venv\Scripts\activate      # For Windows
 
 pip install -r requirements.txt
+pip install audioop-ltst
