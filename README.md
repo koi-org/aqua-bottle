@@ -1,8 +1,10 @@
 ## Usage
-python3 -m venv venv
+new requirements -> add to requirements.txt: `pip freeze > requirements.txt`
 
-source venv/bin/activate   # For Linux/macOS
+`python3 -m venv venv`
 
-venv\Scripts\activate      # For Windows
+`source venv/bin/activate   # For Linux/macOS`
 
-pip install -r requirements.txt
+`venv\Scripts\activate      # For Windows`
+
+`pip install -r requirements.txt`
