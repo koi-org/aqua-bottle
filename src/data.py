@@ -23,7 +23,6 @@ def read_data(user_id):
             return user_data
 
         except FileNotFoundError:
-            print(f"file not found: {user_file}")
             return {}
 
         finally:
@@ -46,5 +45,34 @@ def write_data(user_id, new_data):
         shutil.move(temp_file, user_file)
 
 # testing
-user_id = '12345'
-user_data = read_data(user_id)
+id = '12345'
+person = {
+    "first_name": "John",
+    "last_name": "Doe",
+    "age": 30,
+    "is_employed": True,
+    "skills": ["Python", "JavaScript", "SQL"],
+    "address": {
+        "street": "123 Main St",
+        "city": "Springfield",
+        "zip_code": "12345"
+    }
+}
+
+print("#1")
+my_data = read_data(user_id=id)
+print(my_data)
+
+print("#2")
+write_data(user_id=id, new_data=person)
+
+my_data = read_data(user_id=id)
+print(my_data)
+
+print("#3")
+person["first_name"] = "Steve"
+person["age"] = 50
+write_data(user_id=id, new_data=person)
+
+my_data = read_data(user_id=id)
+print(my_data)
