@@ -9,6 +9,7 @@ def ensure_dict(value):
         raise TypeError("not a dict :(")
     return value
 
+
 def read_data(user_id):
     user_file = f"./data/{user_id}.json"
     lock_file = Path(f"{user_file}.lock.read")
@@ -25,9 +26,6 @@ def read_data(user_id):
         except FileNotFoundError:
             return {}
 
-        finally:
-            if lock_file.exists():
-                lock_file.unlink()
 
 def write_data(user_id, new_data):
     user_file = f"./data/{user_id}.json"
@@ -44,35 +42,37 @@ def write_data(user_id, new_data):
 
         shutil.move(temp_file, user_file)
 
-# testing
-id = '12345'
-person = {
-    "first_name": "John",
-    "last_name": "Doe",
-    "age": 30,
-    "is_employed": True,
-    "skills": ["Python", "JavaScript", "SQL"],
-    "address": {
-        "street": "123 Main St",
-        "city": "Springfield",
-        "zip_code": "12345"
+
+def test():
+    id = '12345'
+    person = {
+        "first_name": "John",
+        "last_name": "Doe",
+        "age": 30,
+        "is_employed": True,
+        "skills": ["Python", "JavaScript", "SQL"],
+        "address": {
+            "street": "123 Main St",
+            "city": "Springfield",
+            "zip_code": "12345"
+        }
     }
-}
 
-print("#1")
-my_data = read_data(user_id=id)
-print(my_data)
+    print("#1")
+    my_data = read_data(user_id=id)
+    print(my_data)
 
-print("#2")
-write_data(user_id=id, new_data=person)
+    print("#2")
+    write_data(user_id=id, new_data=person)
+    my_data = read_data(user_id=id)
+    print(my_data)
 
-my_data = read_data(user_id=id)
-print(my_data)
+    print("#3")
+    person["first_name"] = "Steve"
+    person["age"] = 50
+    write_data(user_id=id, new_data=person)
+    my_data = read_data(user_id=id)
+    print(my_data)
 
-print("#3")
-person["first_name"] = "Steve"
-person["age"] = 50
-write_data(user_id=id, new_data=person)
 
-my_data = read_data(user_id=id)
-print(my_data)
+test()
