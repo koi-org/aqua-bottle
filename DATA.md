@@ -1,31 +1,35 @@
 players = [
+    <!-- Player 1 (user class) -->
     {
-        "user_id": 5678,
-        "balance": "$50",
-        "Aquarium": {
-            "channel_id": 789456123,
-            "cycled": True,
-            "volume": 50 litres,
-            "substrate": "gravel",
-            "heater": True,
-            "pollution": {
+        "user_id": 5678, (int)
+        "balance": "$50", (float)
+        "Aquarium": { (aquarium class)
+            "channel_id": 789456123, (int)
+            "cycled": True, (bool)
+            "volume": 50 litres, (bool)
+            "substrate": "gravel", (str)
+            "heater": True, (bool)
+            "pollution": { (dict)
                 "ammonia": 0.5,
                 "nitrite": 0.3,
                 "nitrate": 20,
             },
-            "plants": [
-                "anubias", "hornwort"
+            "plants": [ (list)
+                "anubias" (plant class),
+                "hornwort" (plant class)
             ],
-            "ph": 6.8,
-            "temperature": 27 C,
-            "fish": [
+            "ph": 6.8, (float)
+            "temperature": 27 C, (float)
+            "fish": [ (list)
                 {
-                    "species": "guppy",
-                    "count": 10
+                    "guppy", (fish class)
+                    "betta", (fish class)
+                    "koi" (fish class)
                 }
             ]
         }
     },
+    <!-- Player 2 -->
     {
         "user_id": 91011,
         "balance": "$20",
@@ -47,7 +51,7 @@ players = [
             "temperature": "25 C",
             "fish": [
 
-            ]    
+            ]
         }
     }
 ]
