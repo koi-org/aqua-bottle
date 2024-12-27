@@ -1,6 +1,4 @@
-from random import randint, choice
-from aquarium import Aquarium, check_existence
-from data import data
+from aquarium import Aquarium
 
 valid_commands = {
     'daily', 'start', 'shop', 'help'
