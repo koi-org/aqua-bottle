@@ -14,16 +14,21 @@ def read_data(user_id):
     lock_file = f"./{user_file}.lock.read"
     lock = FileLock(lock_file)
 
-    with lock:
-        try:
-            with open(user_file, 'r') as f:
-                user_data = json.load(f)
+    try:
+        with lock:
+            try:
+                with open(user_file, 'r') as f:
+                    user_data = json.load(f)
 
-            ensure_dict(user_data)
-            return user_data
+                ensure_dict(user_data)
+                return user_data
 
-        except FileNotFoundError:
-            return {}
+            except FileNotFoundError:
+                return {}
+
+    finally:
+        if os.path.exists(lock_file):
+            os.remove(lock_file)
 
 
 def write_data(user_id, new_data):
@@ -32,15 +37,19 @@ def write_data(user_id, new_data):
     lock_file = f"./data/{user_id}.lock.write"
     lock = FileLock(lock_file)
 
-    with lock:
-        data = read_data(user_id)
-        ensure_dict(new_data)
-        data.update(new_data)
+    try:
+        with lock:
+            data = read_data(user_id)
+            ensure_dict(new_data)
+            data.update(new_data)
 
-        with open(temp_file, 'w') as f:
-            json.dump(data, f, indent=4)
+            with open(temp_file, 'w') as f:
+                json.dump(data, f, indent=4)
+            shutil.move(temp_file, user_file)
 
-        shutil.move(temp_file, user_file)
+    finally:
+        if os.path.exists(lock_file):
+            os.remove(lock_file)
 
 
 def test():
