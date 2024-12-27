@@ -2,7 +2,6 @@ import json
 import os
 import shutil
 from filelock import FileLock
-from pathlib import Path
 
 def ensure_dict(value):
     if not isinstance(value, dict):
@@ -12,7 +11,7 @@ def ensure_dict(value):
 
 def read_data(user_id):
     user_file = f"./data/{user_id}.json"
-    lock_file = Path(f"{user_file}.lock.read")
+    lock_file = f"./{user_file}.lock.read"
     lock = FileLock(lock_file)
 
     with lock:
@@ -35,6 +34,7 @@ def write_data(user_id, new_data):
 
     with lock:
         data = read_data(user_id)
+        ensure_dict(new_data)
         data.update(new_data)
 
         with open(temp_file, 'w') as f:
@@ -57,6 +57,7 @@ def test():
             "zip_code": "12345"
         }
     }
+    not_a_person = "person"
 
     print("#1")
     my_data = read_data(user_id=id)
@@ -71,6 +72,11 @@ def test():
     person["first_name"] = "Steve"
     person["age"] = 50
     write_data(user_id=id, new_data=person)
+    my_data = read_data(user_id=id)
+    print(my_data)
+
+    print("#4")
+    write_data(user_id=id, new_data=not_a_person)
     my_data = read_data(user_id=id)
     print(my_data)
 
