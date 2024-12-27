@@ -1,0 +1,16 @@
+{
+    "first_name": "Steve",
+    "last_name": "Doe",
+    "age": 50,
+    "is_employed": true,
+    "skills": [
+        "Python",
+        "JavaScript",
+        "SQL"
+    ],
+    "address": {
+        "street": "123 Main St",
+        "city": "Springfield",
+        "zip_code": "12345"
+    }
+}
