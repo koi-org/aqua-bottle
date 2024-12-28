@@ -3,29 +3,32 @@ from user_manager import UserManager
 
 
 class Aquarium:
-    aquarium_data = []
-    def __init__(self, user_id: int, channel_id: int):
-        self.user_id = user_id
+    def __init__(self, user: User, channel_id: int):
+        self.user_id = user.id
         self.channel_id = channel_id
         self.cycled = False
 
-        if self.aquarium_exists():
-            raise ValueError("Aquarium already exists")
+        if not UserManager.user_exists(self.user_id):
+            raise ValueError("User does not exist")
+        elif self.aquarium_exists(user, channel_id):
+            raise ValueError("Aquarium exists")
         else:
-            Aquarium.aquarium_data.append(self)    
+            self.append_aquarium(self.user_id)
 
-    def aquarium_exists(self):
-        for aquarium in Aquarium.aquarium_data:
-            if aquarium.channel_id == self.channel_id:
+
+    def aquarium_exists(self, user: User, channel_id):
+        for aquarium in user.aquariums:
+            if aquarium.channel_id == channel_id:
                 return True
-        return False
+            return False
+
+
+    def append_aquarium(self, user_id):
+        for user in UserManager.users:
+            if user.id == user_id:
+                user.aquariums.append(self)
+
     
-
-# user1 = User(name="Son Doumeg", user_id = 59, aquarium=None, balance=999)
-# print(user1)
-
-# doumeg_id = user1.user_id
-# channel_id = 69
-
-# aquarium1 = Aquarium(69, channel_id)
-# aquarium1 = Aquarium(69, channel_id)
+    def print_aquariums(self, user):
+        for aquarium in user.aquariums:
+            print(aquarium)

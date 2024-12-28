@@ -1,15 +1,20 @@
 from user import User
 from user_manager import UserManager
+from aquarium import Aquarium
 
 # Use User and UserManager together here
-user1 = User(name="Son Doumeg", id=59, aquarium=[], balance=999)
+def test_add_user():
+    user = User(name="Test User", id=1, balance=100.0)
+    UserManager.add_user(user)
+    assert user in UserManager.users
+
+def test_user_exists():
+    user = User(name="Test User", id=2, balance=100.0)
+    UserManager.add_user(user)
+    assert UserManager.user_exists(2)
+
+def create_aquarium():
+    user = User(name="Test User", id=3, balance=100.0)
+    UserManager.add_user(user)
 
 
-UserManager.add_user(user1)
-user_exists = UserManager.user_exists(user1.id)
-print(f"Does user {user1.name} exist? {user_exists}")
-
-
-print("Current users:")
-for user in UserManager.users:
-    print(user)

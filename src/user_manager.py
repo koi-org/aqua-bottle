@@ -19,3 +19,9 @@ class UserManager:
             if user.id == user_id:
                 return True
         return False
+
+    @staticmethod
+    def get_user(user_id):
+        for user in UserManager.users:
+            if user.id == user_id:
+                return user

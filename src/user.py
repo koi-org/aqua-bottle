@@ -1,8 +1,8 @@
 class User:
-    def __init__(self, name: str, id: int, aquarium: list, balance: float):
+    def __init__(self, name: str, id: int, balance: float):
         self.name = name
         self.id = id
-        self.aquarium = aquarium
+        self.aquarium = []
         self.balance = balance
 
     def __str__(self):
