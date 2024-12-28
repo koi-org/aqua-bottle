@@ -25,3 +25,8 @@ class UserManager:
         for user in UserManager.users:
             if user.id == user_id:
                 return user
+    
+    @staticmethod
+    def list_aquariums(user):
+        for aquarium in user.aquariums:
+            print(vars(aquarium))

@@ -27,8 +27,3 @@ class Aquarium:
         for user in UserManager.users:
             if user.id == user_id:
                 user.aquariums.append(self)
-
-    
-    def print_aquariums(self, user):
-        for aquarium in user.aquariums:
-            print(aquarium)

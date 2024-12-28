@@ -16,5 +16,13 @@ def test_user_exists():
 def create_aquarium():
     user = User(name="Test User", id=3, balance=100.0)
     UserManager.add_user(user)
+    aquarium = Aquarium(user, channel_id=10)
+    new_aquarium = Aquarium(user, channel_id=11)
+
+    UserManager.list_aquariums(user)
+
+
+
+create_aquarium()
 
 
