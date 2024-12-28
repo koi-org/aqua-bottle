@@ -1,15 +1,15 @@
 from user import User
 
 class UserManager:
-    users: User = []
+    users = []
 
     @staticmethod
     def add_user(user):
         if not isinstance(user, User):
-            raise TypeError("not a user :()")
+            raise TypeError("Not a User object")
 
         if UserManager.user_exists(user.id):
-            raise ValueError("user already exists")
+            raise ValueError("User already exists")
 
         UserManager.users.append(user)
 

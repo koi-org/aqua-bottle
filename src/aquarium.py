@@ -1,7 +1,8 @@
 from user import User
+from user_manager import UserManager
+
 
 class Aquarium:
-
     aquarium_data = []
     def __init__(self, user_id: int, channel_id: int):
         self.user_id = user_id
@@ -12,9 +13,6 @@ class Aquarium:
             raise ValueError("Aquarium already exists")
         else:
             Aquarium.aquarium_data.append(self)    
-        
-    def player_exists():
-        pass
 
     def aquarium_exists(self):
         for aquarium in Aquarium.aquarium_data:
