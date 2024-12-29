@@ -3,6 +3,11 @@ This module defines the Aquarium class, which simulates an aquarium's features
 and provides methods to manage its environment.
 """
 
+valid_substrate = {
+    "gravel",
+    "sand",
+    "soil"
+}
 
 class Aquarium:
     """The aquarium class"""
