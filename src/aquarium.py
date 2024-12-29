@@ -1,13 +1,11 @@
-from user import User
-from user_manager import UserManager
-
-
 class Aquarium:
+    """The aquarium class"""
     def __init__(
         self,
         channel_id: int,
         volume: int,
     ):
+        """Init method to create an aquarium"""
         self.channel_id = channel_id
         self.cycled = False
         self.volume = volume
@@ -20,7 +18,9 @@ class Aquarium:
         self.fish = {}
 
     def choose_substrate(self, substrate: str):
+        """Method to choose the aquarium's substrate"""
         self.substrate = substrate
 
     def add_heater(self):
+        """Method to add a heater to the fish tank"""
         self.heater = True
