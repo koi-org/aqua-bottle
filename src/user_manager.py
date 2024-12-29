@@ -5,19 +5,19 @@ class UserManager:
     users: Set[User] = set()
 
     @staticmethod
-    def add_user(user):
+    def add_user(user: User):
         if user in UserManager.users:
-            print("user already exists")
+            print("User already exists")
         UserManager.users.add(user)
 
     @staticmethod
-    def get_user(user_id):
+    def get_user(user_id: int):
         for user in UserManager.users:
             if user.id == user_id:
                 return user
 
     @staticmethod
-    def list_aquariums(user):
+    def list_aquariums(user: User):
         for user in UserManager.users:
             for aquarium in user.aquariums:
                 print(vars(aquarium))
