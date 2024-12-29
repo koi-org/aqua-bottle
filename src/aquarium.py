@@ -1,3 +1,7 @@
+"""
+This module defines the Aquarium class, which simulates an aquarium's features 
+and provides methods to manage its environment.
+"""
 class Aquarium:
     """The aquarium class"""
     def __init__(
@@ -11,11 +15,17 @@ class Aquarium:
         self.volume = volume
         self.substrate = None
         self.heater = False
-        self.pollution = {"ammonia": 0, "nitrate": 0, "nitrite": 0}
-        self.ph = None
-        self.temperature = None
-        self.plants = {}
-        self.fish = {}
+        self.water_quality = {
+            "ammonia": 0,
+            "nitrate": 0,
+            "nitrite": 0,
+            "ph": None,
+            "temperature": None
+            }
+        self.inhabitants = {
+            'fish': {},
+            'plants': {}
+        }
 
     def choose_substrate(self, substrate: str):
         """Method to choose the aquarium's substrate"""
