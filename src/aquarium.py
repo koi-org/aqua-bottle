@@ -3,17 +3,24 @@ from user_manager import UserManager
 
 
 class Aquarium:
-    def __init__(self, user, channel_id: int):
+    def __init__(
+        self,
+        channel_id: int,
+        volume: int,
+    ):
         self.channel_id = channel_id
         self.cycled = False
+        self.volume = volume
+        self.substrate = None
+        self.heater = False
+        self.pollution = {"ammonia": 0, "nitrate": 0, "nitrite": 0}
+        self.ph = None
+        self.temperature = None
+        self.plants = {}
+        self.fish = {}
 
-        if not UserManager.user_exists(user.id):
-            raise ValueError("User does not exist")
-        if self.aquarium_exists(user, channel_id):
-            raise ValueError("Aquarium exists")
+    def choose_substrate(self, substrate: str):
+        self.substrate = substrate
 
-    def aquarium_exists(self, user: User, channel_id: int):
-        for aquarium in user.aquariums:
-            if aquarium.channel_id == channel_id:
-                return True
-            return False
+    def add_heater(self):
+        self.heater = True
