@@ -1,25 +1,14 @@
 from user import User
-
+from typing import Set
 
 class UserManager:
-    users = []
+    users: Set[User] = set()
 
     @staticmethod
     def add_user(user):
-        if not isinstance(user, User):
-            raise TypeError("Not a User object")
-
-        if UserManager.user_exists(user.id):
-            raise ValueError("User already exists")
-
-        UserManager.users.append(user)
-
-    @staticmethod
-    def user_exists(user_id):
-        for user in UserManager.users:
-            if user.id == user_id:
-                return True
-        return False
+        if user in UserManager.users:
+            print("user already exists")
+        UserManager.users.add(user)
 
     @staticmethod
     def get_user(user_id):
@@ -29,5 +18,6 @@ class UserManager:
 
     @staticmethod
     def list_aquariums(user):
-        for aquarium in user.aquariums:
-            print(vars(aquarium))
+        for user in UserManager.users:
+            for aquarium in user.aquariums:
+                print(vars(aquarium))
