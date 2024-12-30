@@ -1,7 +1,7 @@
 import discord
 import os  # default module
 from dotenv import load_dotenv
-from user_manager import UserManager
+from manager import UserManager
 from user import User
 
 # Load environment variables from the .env file
@@ -41,7 +41,7 @@ async def register(ctx: discord.ApplicationContext, name: str = None):
     if UserManager.add_user(user_id, username):
         await ctx.respond(f"{username} has successfully registered for the game.")
     else:
-        await ctx.respond(f"You're already in the game, {username}")
+        await ctx.respond(f"You're already in the game.")
 
 # Run the bot with the token
 bot.run(token)

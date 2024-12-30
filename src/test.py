@@ -1,5 +1,5 @@
 from user import User
-from user_manager import UserManager
+from manager import UserManager
 from aquarium import Aquarium
 
 
