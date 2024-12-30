@@ -1,0 +1,10 @@
+Commands:
+
+register [name]
+- any user can do it on any channel
+- will register the current user to the system, given the name
+- if no name is given, default to discord's username
+
+create [aquarium/fish] [name]
+- aquarium: creates an aquarium for the current channel, with the given name (must provide a name)
+- fish: creates a fish for the current aquarium (if it exists), with the given species (must provide a valid species)
