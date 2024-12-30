@@ -1,14 +1,16 @@
 from user import User
-from typing import Set
+from typing import Dict
 
 class UserManager:
-    users: Set[User] = set()
+    users: Dict[int, User] = set()
 
     @staticmethod
-    def add_user(user: User):
-        if user in UserManager.users:
+    def add_user(user_id: int, username: str):
+        if user_id in UserManager.users:
             return False
-        UserManager.users.add(user)
+
+        new_user = User(username, user_id, 100)
+        UserManager.users[user_id] = new_user
         return True
 
     @staticmethod
