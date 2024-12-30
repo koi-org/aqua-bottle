@@ -1,57 +1,27 @@
-from typing import Final
-import os
+import discord
+import os  # default module
 from dotenv import load_dotenv
-from discord import Intents, Client, Message
-from responses import get_response
 
-# load our token somewhere safe
-load_dotenv()
-TOKEN: Final[str] = os.getenv("DISCORD_TOKEN")
+# Load environment variables from the .env file
+load_dotenv()  
 
-# bot setup
-intents: Intents = Intents.default()
-intents.message_content = True  # NOQA
-client: Client = Client(intents=intents)
+# Retrieve the bot token from the environment
+token = os.getenv("DISCORD_TOKEN")
 
+# Check if the token exists
+if not token:
+    raise ValueError("DISCORD_TOKEN is not set in the .env file.")
 
-# STEP 2: MESSAGE FUNCTIONALITY
-async def send_message(message: Message, user_message: str) -> None:
-    if not user_message:
-        print("(Message was empty because intents were not enabled probably)")
-        return
+# Initialize the bot
+bot = discord.Bot()
 
-    elif user_message[0] == "!":
-        try:
-            response: str = get_response(user_message, message)
-            await message.channel.send(response)
-        except Exception as e:
-            print(e)
+@bot.event
+async def on_ready():
+    print(f"{bot.user} is ready and online!")
 
+@bot.slash_command(name="hello", description="Say hello to the bot")
+async def hello(ctx: discord.ApplicationContext):
+    await ctx.respond("Hey!")
 
-# STEP 3: HANDLING THE STARTUP FOR OUR BOT
-@client.event
-async def on_ready() -> None:
-    print(f"{client.user} is now running!")
-
-
-# STEP 4: HANDLING INCOMING MESSAGE
-@client.event
-async def on_message(message: Message) -> None:
-    if message.author == client.user:
-        return
-
-    username: str = str(message.author)
-    user_message: str = message.content
-    channel: str = str(message.channel)
-
-    print(f'[{channel}] {username}: "{user_message}"')
-    await send_message(message, user_message)
-
-
-# STEP 5: MAIN ENTRY POINT
-def main() -> None:
-    client.run(token=TOKEN)
-
-
-if __name__ == "__main__":
-    main()
+# Run the bot with the token
+bot.run(token)

@@ -5,6 +5,7 @@ venv/
 __pycache__/
 *.pyc
 *.pyo
+.env
 
 # Ignore system files
 .DS_Store  # macOS
