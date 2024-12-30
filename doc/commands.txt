@@ -5,6 +5,8 @@ register [name]
 - will register the current user to the system, given the name
 - if no name is given, default to discord's username
 
-create [aquarium/fish] [name]
+create [aquarium] [name]
 - aquarium: creates an aquarium for the current channel, with the given name (must provide a name)
+
+add fish
 - fish: creates a fish for the current aquarium (if it exists), with the given species (must provide a valid species)

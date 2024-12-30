@@ -1,9 +1,8 @@
 valid_plants = [
-    "java_fern"
-    "java_moss",
+    "java_fern" "java_moss",
     "anubias",
-
 ]
+
 
 class Plant:
     def __init__(self, species):
@@ -11,4 +10,3 @@ class Plant:
             print("Invalid species")
         else:
             self.species = species
-        

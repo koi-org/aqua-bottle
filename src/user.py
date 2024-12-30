@@ -1,6 +1,7 @@
 from aquarium import Aquarium
 from typing import Set
 
+
 class User:
     def __init__(self, name: str, id: int, balance: float):
         self.name = name
@@ -13,10 +14,16 @@ class User:
 
     def add_aquarium(self, aquarium: Aquarium):
         if aquarium in self.aquariums:
-            print("Aquarium already exists")
+            return False
         self.aquariums.add(aquarium)
+        return True
 
     def remove_aquarium(self, aquarium: Aquarium):
         if aquarium not in self.aquariums:
             print("Aquarium doesn't exist")
         self.aquariums.discard(aquarium)
+
+    def get_aquarium(self, id):
+        for aquarium in self.aquariums:
+            if aquarium.channel_id == id:
+                return aquarium

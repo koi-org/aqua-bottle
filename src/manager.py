@@ -1,6 +1,7 @@
 from user import User
 from typing import Dict
 
+
 class Manager:
     # Manage all users here
     users: Dict[int, User] = {}
