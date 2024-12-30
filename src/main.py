@@ -21,20 +21,21 @@ bot = discord.Bot()
 async def on_ready():
     print(f"{bot.user} is ready and online!")
 
-@bot.slash_command(name="hello", description="Say hello to the bot")
+@bot.slash_command(name="hello", description="Say hello to the bot", guild_ids=[692964332643942463])
 async def hello(ctx: discord.ApplicationContext):
     username = ctx.author.name
     user_id = ctx.author.id
     channel_id = ctx.channel.id
     channel_name = ctx.channel.name
+    guild_id = ctx.guild.id
 
-    await ctx.respond(f"Hello {username} (User ID: {user_id})! You are in channel {channel_name} (ID: {channel_id}).")
+    await ctx.respond(f"Hello {username} (User ID: {user_id})! You are in channel {channel_name} (ID: {channel_id}). (Guild id: {guild_id})")
 
-@bot.slash_command(name="greeting", description="greeting")
+@bot.slash_command(name="greeting", description="greeting", guild_ids=[692964332643942463])
 async def greeting(ctx: discord.ApplicationContext):
     await ctx.respond(f"Greetings {ctx.author.name}!")
 
-@bot.slash_command(name="register", description="Register your account for the aquarium game!")
+@bot.slash_command(name="register", description="Register your account for the aquarium game!", guild_ids=[692964332643942463])
 async def register(ctx: discord.ApplicationContext, username: str = None):
     discord_name = ctx.author.name
     user_id = ctx.author.id
@@ -47,7 +48,7 @@ async def register(ctx: discord.ApplicationContext, username: str = None):
     else:
         await ctx.respond(f"You're already in the game.")
 
-@bot.slash_command(name="create_aquarium", description="Create your own aquarium with your registered account!")
+@bot.slash_command(name="create_aquarium", description="Create your own aquarium with your registered account!", guild_ids=[692964332643942463])
 async def create_aquarium(ctx: discord.ApplicationContext, name: str):
     user_id = ctx.author.id
     user = Manager.get_user(user_id)
