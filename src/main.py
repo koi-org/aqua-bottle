@@ -30,6 +30,10 @@ async def hello(ctx: discord.ApplicationContext):
 
     await ctx.respond(f"Hello {username} (User ID: {user_id})! You are in channel {channel_name} (ID: {channel_id}).")
 
+@bot.slash_command(name="greeting", description="greeting")
+async def greeting(ctx: discord.ApplicationContext):
+    await ctx.respond(f"Greetings {ctx.author.name}!")
+
 @bot.slash_command(name="register", description="Register your account for the aquarium game!")
 async def register(ctx: discord.ApplicationContext, username: str = None):
     discord_name = ctx.author.name
@@ -42,6 +46,18 @@ async def register(ctx: discord.ApplicationContext, username: str = None):
         await ctx.respond(f"{discord_name} has successfully registered for the game as: {username}.")
     else:
         await ctx.respond(f"You're already in the game.")
+
+@bot.slash_command(name="create_aquarium", description="Create your own aquarium with your registered account!")
+async def create_aquarium(ctx: discord.ApplicationContext, name: str):
+    user_id = ctx.author.id
+    user = Manager.get_user(user_id)
+
+    if user is None:
+        await ctx.respond("You are not a valid user, please register before creating an aquarium!")
+    else:
+        # Add logic to create the aquarium
+        await ctx.respond(f"Aquarium '{name}' has been successfully created!")
+
 
 # Run the bot with the token
 bot.run(token)
