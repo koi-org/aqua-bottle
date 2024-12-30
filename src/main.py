@@ -1,7 +1,7 @@
 import discord
 import os  # default module
 from dotenv import load_dotenv
-from manager import UserManager
+from manager import Manager
 from user import User
 
 # Load environment variables from the .env file
@@ -31,15 +31,15 @@ async def hello(ctx: discord.ApplicationContext):
     await ctx.respond(f"Hello {username} (User ID: {user_id})! You are in channel {channel_name} (ID: {channel_id}).")
 
 @bot.slash_command(name="register", description="Register your account for the aquarium game!")
-async def register(ctx: discord.ApplicationContext, name: str = None):
-    username = ctx.author.name
+async def register(ctx: discord.ApplicationContext, username: str = None):
+    discord_name = ctx.author.name
     user_id = ctx.author.id
 
-    if name and len(name) > 1:
-        username = name
+    if not username:
+        username = discord_name
 
-    if UserManager.add_user(user_id, username):
-        await ctx.respond(f"{username} has successfully registered for the game.")
+    if Manager.add_user(user_id, username):
+        await ctx.respond(f"{discord_name} has successfully registered for the game as: {username}.")
     else:
         await ctx.respond(f"You're already in the game.")
 
