@@ -7,8 +7,9 @@ class UserManager:
     @staticmethod
     def add_user(user: User):
         if user in UserManager.users:
-            print("User already exists")
+            return False
         UserManager.users.add(user)
+        return True
 
     @staticmethod
     def get_user(user_id: int):

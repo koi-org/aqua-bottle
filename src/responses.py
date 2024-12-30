@@ -14,15 +14,20 @@ def get_response(user_input: str, message) -> str:
     author_name = ""
 
     if lowered == "register":
+        ret_string = ""
+
         if len(command_message) == 1:
             author_name = message.author.name
         else:
             author_name = command_message[1]
 
         new_user = User(author_name, int(author_id), 100)
-        UserManager.add_user(new_user)
 
-        ret_string = f"Welcome {author_name}!"
+        if not new_user:
+            ret_string = "User already registered!"
+        else:
+            UserManager.add_user(new_user)
+            ret_string = f"Welcome {author_name}!"
 
         return ret_string
     elif lowered == "help":
