@@ -31,13 +31,11 @@ async def hello(ctx: discord.ApplicationContext):
     await ctx.respond(f"Hello {username} (User ID: {user_id})! You are in channel {channel_name} (ID: {channel_id}).")
 
 @bot.slash_command(name="register", description="Register your account for the aquarium game!")
-async def register(ctx: discord.ApplicationContext, name: str):
+async def register(ctx: discord.ApplicationContext, name: str = None):
     username = ctx.author.name
     user_id = ctx.author.id
-    channel_id = ctx.channel.id
-    channel_name = ctx.channel.name
 
-    if name is not None and len(name) > 1:
+    if name and len(name) > 1:
         username = name
 
     if UserManager.add_user(user_id, username):
