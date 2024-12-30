@@ -1,6 +1,8 @@
 import discord
 import os  # default module
 from dotenv import load_dotenv
+from user_manager import UserManager
+from user import User
 
 # Load environment variables from the .env file
 load_dotenv()
@@ -21,15 +23,27 @@ async def on_ready():
 
 @bot.slash_command(name="hello", description="Say hello to the bot")
 async def hello(ctx: discord.ApplicationContext):
-    # Get user info
     username = ctx.author.name
     user_id = ctx.author.id
-    # Get channel info
     channel_id = ctx.channel.id
     channel_name = ctx.channel.name
 
-    # Respond with a custom message including the user's name, ID, channel ID, and channel name
     await ctx.respond(f"Hello {username} (User ID: {user_id})! You are in channel {channel_name} (ID: {channel_id}).")
+
+@bot.slash_command(name="register", description="Register your account for the aquarium game!")
+async def register(ctx: discord.ApplicationContext, name: str):
+    username = ctx.author.name
+    user_id = ctx.author.id
+    channel_id = ctx.channel.id
+    channel_name = ctx.channel.name
+
+    if name is not None and len(name) > 1:
+        username = name
+
+    if UserManager.add_user(user_id, username):
+        await ctx.respond(f"{username} has successfully registered for the game.")
+    else:
+        await ctx.respond(f"You're already in the game, {username}")
 
 # Run the bot with the token
 bot.run(token)
