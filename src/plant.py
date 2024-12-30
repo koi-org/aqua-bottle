@@ -9,4 +9,6 @@ class Plant:
     def __init__(self, species):
         if species not in valid_plants:
             print("Invalid species")
+        else:
+            self.species = species
         
