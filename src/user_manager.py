@@ -2,7 +2,7 @@ from user import User
 from typing import Dict
 
 class UserManager:
-    users: Dict[int, User] = set()
+    users: Dict[int, User] = {}
 
     @staticmethod
     def add_user(user_id: int, username: str):
