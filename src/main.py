@@ -74,6 +74,7 @@ async def create_aquarium(ctx: discord.ApplicationContext, volume: int):
         await ctx.respond(
             "You are not a valid user, please register before creating an aquarium!"
         )
+        return
 
     # check if the aquarium already exists
     aquarium = Aquarium(channel_id, volume)
