@@ -49,3 +49,14 @@ class Aquarium:
 
     def add_fish(self, fish: Fish):
         self.inhabitants["fish"].add(fish)
+
+    def __eq__(self, other):
+        if isinstance(other, Aquarium):
+            return self.channel_id == other.channel_id
+        return False
+
+    def __hash__(self):
+        return hash(self.channel_id)
+
+    def __repr__(self):
+        return f"Aquarium (channel_id={self.channel_id})"
