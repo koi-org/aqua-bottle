@@ -1,4 +1,4 @@
-from aquarium import Aquarium
+from classes.aquarium import Aquarium
 from typing import Set
 
 

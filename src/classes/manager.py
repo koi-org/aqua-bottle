@@ -1,4 +1,4 @@
-from user import User
+from classes.user import User
 from typing import Dict
 
 

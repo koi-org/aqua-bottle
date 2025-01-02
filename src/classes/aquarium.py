@@ -1,7 +1,7 @@
-from fish import Fish
+from classes.fish import Fish
 
 """
-This module defines the Aquarium class, which simulates an aquarium's features 
+This module defines the Aquarium class, which simulates an aquarium's features
 and provides methods to manage its environment.
 """
 
