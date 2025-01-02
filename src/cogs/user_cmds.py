@@ -7,6 +7,8 @@ class UserCommands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    user = discord.SlashCommandGroup("user", "Manage your user account.")
+
     @discord.slash_command(
         name="register",
         description="Register your account for the aquarium game!",

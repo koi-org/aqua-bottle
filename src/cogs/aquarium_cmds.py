@@ -9,6 +9,16 @@ class AquariumCommands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    aquarium = discord.SlashCommandGroup("aquarium", "Manage your aquarium.")
+    fish = aquarium.create_subgroup(
+        "fish",
+        "Manage the fish in your aquarium."
+    )
+    plant = aquarium.create_subgroup(
+        "plant",
+        "Manage the plants in your aquarium."
+    )
+
     @discord.slash_command(
         name="create_aquarium",
         description="Create your own aquarium with your registered account!",
