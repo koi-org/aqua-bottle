@@ -26,3 +26,6 @@ others may need specific decorations
 
 add decorations
 - add decorations, can add like driftwood or rocks.
+
+feed
+- feed the fish
