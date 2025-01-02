@@ -33,44 +33,36 @@ class AquariumCommands(commands.Cog):
         if not append_aquarium:
             await ctx.respond(f"Aquarium already exists!")
         else:
-            await ctx.respond(f"Aquarium has been successfully created!")
+            await ctx.respond(f"Aquarium of {volume} litres has been successfully created!")
 
     @discord.slash_command(
         name="add_fish",
         description="Add fish to your own aquarium!",
         guild_ids=[692964332643942463],
     )
-    async def add_fish(
-        self, ctx: discord.ApplicationContext, species: str, gender: str, age: str
-    ):
+    async def add_fish(self, ctx: discord.ApplicationContext, species: str, gender: str, age: str):
         # check if user exists
         user_id = ctx.author.id
         channel_id = ctx.channel.id
         user = Manager.get_user(user_id)
 
-        # check if aquarium exists
         if user is None:
             await ctx.respond(
                 "You are not a valid user, please register before creating an aquarium!"
             )
+            return
 
-        aquarium = user.get_aquarium(channel_id)
         # check if the aquarium exists
+        aquarium = user.get_aquarium(channel_id)
         if not aquarium:
             await ctx.respond("Aquarium does not exist!")
+            return
 
-        new_fish = Fish(species, gender, int(age))
-        # check if the fish is a valid species
-        valid_fish = aquarium.is_valid_fish(new_fish)
-
-        if not valid_fish:
-            await ctx.respond("Fish is not valid!")
-
+        if species not in Aquarium.valid_fish:
+            await ctx.respond(f"{species} is not a valid fish!")
         else:
-            aquarium.add_fish(new_fish)
-            await ctx.respond(f"Fish successfully added!")
-
-        channel_id = ctx.channel.id
+            aquarium.add_fish(Fish(species, gender, int(age)))
+            await ctx.respond(f"Fish of species: {species}, gender: {gender}, age: {age} is successfully added!")
 
 
 def setup(bot):
