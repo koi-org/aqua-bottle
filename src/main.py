@@ -21,16 +21,14 @@ bot = discord.Bot()
 async def on_ready():
     print(f"{bot.user} is ready and online!")
 
-
 cogs_list = [
-    "user_cmds",
-    "aquarium_cmds",
-    "miscellaneous_cmds",
+    'user_cmds',
+    'aquarium_cmds',
+    'miscellaneous_cmds',
 ]
 
 for cog in cogs_list:
-    bot.load_extension(f"cogs.{cog}")
-
+    bot.load_extension(f'cogs.{cog}')
 
 # Run the bot with the token
 bot.run(token)
