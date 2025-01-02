@@ -83,7 +83,7 @@ async def create_aquarium(ctx: discord.ApplicationContext, volume: int):
     if not append_aquarium:
         await ctx.respond(f"Aquarium already exists!")
     else:
-        await ctx.respond(f"Aquarium has been successfully created!")
+        await ctx.respond(f"Aquarium of {volume} litres has been successfully created!")
 
 
 @bot.slash_command(
@@ -99,29 +99,23 @@ async def add_fish(
     channel_id = ctx.channel.id
     user = Manager.get_user(user_id)
 
-    # check if aquarium exists
     if user is None:
         await ctx.respond(
             "You are not a valid user, please register before creating an aquarium!"
         )
+        return
 
-    aquarium = user.get_aquarium(channel_id)
     # check if the aquarium exists
+    aquarium = user.get_aquarium(channel_id)
     if not aquarium:
         await ctx.respond("Aquarium does not exist!")
+        return
 
-    new_fish = Fish(species, gender, int(age))
-    # check if the fish is a valid species
-    valid_fish = aquarium.is_valid_fish(new_fish)
-
-    if not valid_fish:
+    if species not in Aquarium.valid_fish:
         await ctx.respond("Fish is not valid!")
-
     else:
-        aquarium.add_fish(new_fish)
-        await ctx.respond(f"Fish successfully added!")
-
-    channel_id = ctx.channel.id
+        aquarium.add_fish(Fish(species, gender, int(age)))
+        await ctx.respond(f"Fish of species: {species}, gender: {gender}, age: {age} is successfully added!")
 
 
 # Run the bot with the token
