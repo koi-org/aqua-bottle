@@ -1,10 +1,9 @@
 import discord
 import os  # default module
 from dotenv import load_dotenv
-from manager import Manager
-from user import User
-from aquarium import Aquarium
-from fish import Fish
+from classes.manager import Manager
+from classes.aquarium import Aquarium
+from classes.fish import Fish
 
 # Load environment variables from the .env file
 load_dotenv()
