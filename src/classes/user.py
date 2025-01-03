@@ -13,7 +13,6 @@ class User:
         balance (float): The user's account balance.
     """
 
-
     def __init__(self, name: str, id: int, balance: float):
         """
         Initializes a User object.

@@ -8,10 +8,10 @@ class Plant:
     """
     Represents a plant species.
 
-    This class validates whether the given species is part of the predefined 
+    This class validates whether the given species is part of the predefined
     list of valid plants and initializes the plant if valid.
     """
-    
+
     def __init__(self, species):
         """
         Initializes a Plant object.

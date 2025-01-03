@@ -10,7 +10,7 @@ class Manager:
     .......
     add_user(user_id, username):
         Adds a user instance to the users dictionary
-    
+
     get_user(user_id):
         Returns the instance of a user based on their id
 
@@ -18,6 +18,7 @@ class Manager:
         lists the aquariums owned by the user. this method
         is more for debugging
     """
+
     users: Dict[int, User] = {}
 
     @staticmethod

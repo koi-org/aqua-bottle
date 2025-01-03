@@ -6,7 +6,19 @@ from classes.fish import Fish
 
 
 class AquariumCommands(commands.Cog):
+    """
+    A Cog that provides commands for managing aquariums, fish, and plants in a Discord bot.
+
+    This class defines slash commands for creating aquariums, adding fish, and other related tasks.
+    """
+
     def __init__(self, bot):
+        """
+        Initializes the AquariumCommands Cog.
+
+        Parameters:
+            bot (commands.Bot): The Discord bot instance to which this Cog is added.
+        """
         self.bot = bot
 
     aquarium = discord.SlashCommandGroup("aquarium", "Manage your aquarium.")
@@ -19,6 +31,15 @@ class AquariumCommands(commands.Cog):
         guild_ids=[692964332643942463],
     )
     async def create_aquarium(self, ctx: discord.ApplicationContext, volume: int):
+        """
+        Slash command to create a new aquarium.
+
+        Parameters:
+            ctx (discord.ApplicationContext): The context of the command.
+            volume (int): The volume of the aquarium in liters.
+
+        Responds with a success or failure message based on whether the aquarium is created.
+        """
         user_id = ctx.author.id
         channel_id = ctx.channel.id
         user = Manager.get_user(user_id)
@@ -35,7 +56,7 @@ class AquariumCommands(commands.Cog):
         append_aquarium = user.add_aquarium(aquarium)
 
         if not append_aquarium:
-            await ctx.respond(f"Aquarium already exists!")
+            await ctx.respond("Aquarium already exists!")
         else:
             await ctx.respond(
                 f"Aquarium of {volume} litres has been successfully created!"
@@ -49,6 +70,17 @@ class AquariumCommands(commands.Cog):
     async def add_fish(
         self, ctx: discord.ApplicationContext, species: str, gender: str, age: str
     ):
+        """
+        Slash command to add a fish to an existing aquarium.
+
+        Parameters:
+            ctx (discord.ApplicationContext): The context of the command.
+            species (str): The species of the fish to add.
+            gender (str): The gender of the fish.
+            age (str): The age of the fish.
+
+        Responds with a success or failure message based on the validity of the input and the aquarium's existence.
+        """
         # check if user exists
         user_id = ctx.author.id
         channel_id = ctx.channel.id
@@ -76,4 +108,10 @@ class AquariumCommands(commands.Cog):
 
 
 def setup(bot):
+    """
+    Sets up the AquariumCommands Cog in the bot.
+
+    Parameters:
+        bot (commands.Bot): The Discord bot instance.
+    """
     bot.add_cog(AquariumCommands(bot))
