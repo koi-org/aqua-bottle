@@ -1,4 +1,7 @@
 from classes.fish import Fish
+import datetime
+import threading
+import time
 
 
 valid_fish = {"Guppy", "Neon Tetra", "Molly", "Platy"}
@@ -35,6 +38,8 @@ class Aquarium:
             adds fish to the aquarium
     """
 
+    time_unit = 5
+
     def __init__(
         self,
         channel_id: int,
@@ -64,6 +69,11 @@ class Aquarium:
             "temperature": None,
         }
         self.inhabitants = {"fish": set(), "plants": set()}
+
+        # timer
+        self.running = True
+        self.timer_thread = threading.Thread(target=self.update_age)
+        self.timer_thread.start()
 
     def choose_substrate(self, substrate: str):
         """Method to choose the aquarium's substrate"""
