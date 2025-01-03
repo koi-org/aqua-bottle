@@ -113,6 +113,10 @@ class Aquarium:
     def print_age(self):
         print(f"The aquarium in channel: {self.channel_id} is {self.age} time units old.")
 
+    def stop(self):
+        self.running = False
+        self.timer_thread.join()
+
     def __eq__(self, other):
         if isinstance(other, Aquarium):
             return self.channel_id == other.channel_id
