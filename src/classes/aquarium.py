@@ -1,12 +1,36 @@
 from classes.fish import Fish
 
-"""
-This module defines the Aquarium class, which simulates an aquarium's features
-and provides methods to manage its environment.
-"""
 
 class Aquarium:
-    """The aquarium class"""
+    """
+    A class to represent an aquarium.
+
+    ...
+    Attributes
+    ----------
+    channel_id : int
+        the channel id of where the aquarium is located
+    cycled: bool
+        checks if the aquarium is ammonia cycled
+    volume : int
+        the volume of the aquarium in litres
+    substrate : str
+        the substrate of the aquarium
+    heater : bool
+        checks whether the tank has a heater
+    water_quality : dict
+        the water quality of a tank, such as pollution, pH and temperature
+
+    Methods
+    --------
+        choose_substrate(substrate):
+            chooses the substrate for the aquarium
+        add_heater():
+            adds a heater to the aquarium
+        add_fish(fish: Fish):
+            adds fish to the aquarium
+    """
+
     valid_fish = {"guppy", "neon_tetra", "molly", "platy"}
     valid_substrate = {"gravel", "sand", "soil"}
 
@@ -15,7 +39,17 @@ class Aquarium:
         channel_id: int,
         volume: int,
     ):
-        """Init method to create an aquarium"""
+        """
+        Construcuts necessary attributes for the aquarium object.
+
+        Parameters
+        ---------
+            channel_id : int
+                the channel id of where the aquarium is located
+            volume : int
+                the volume of the aquarium in litres
+        """
+
         self.channel_id = channel_id
         self.cycled = False
         self.volume = volume
@@ -39,6 +73,18 @@ class Aquarium:
         self.heater = True
 
     def add_fish(self, fish: Fish):
+        """
+        Method to add fish to the aquarium
+
+        Parameters
+        ----------
+        fish : Fish
+            the fish that will be added
+
+        Returns
+        ------
+        None
+        """
         self.inhabitants["fish"].add(fish)
 
     def __eq__(self, other):

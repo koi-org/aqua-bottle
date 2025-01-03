@@ -2,6 +2,7 @@ class Fish:
     """
     A class to represent fish
     """
+
     def __init__(self, species: str, gender: str, age_months: int):
         """
         Initialises fish instance with species gender and age in months
