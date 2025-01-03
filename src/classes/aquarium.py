@@ -71,6 +71,8 @@ class Aquarium:
         self.inhabitants = {"fish": set(), "plants": set()}
 
         # timer
+        self.birth_date = datetime.datetime.now()
+        self.age = 0
         self.running = True
         self.timer_thread = threading.Thread(target=self.update_age)
         self.timer_thread.start()
@@ -98,6 +100,16 @@ class Aquarium:
         """
         self.inhabitants["fish"].add(fish)
 
+    def update_age(self):
+        while self.running:
+            current_time = datetime.datetime.now()
+            delta = current_time - self.birth_date
+            self.age = int(delta.total_seconds() // Aquarium.time_unit)
+
+            self.print_age()
+
+            time.sleep(Aquarium.time_unit)
+
     def __eq__(self, other):
         if isinstance(other, Aquarium):
             return self.channel_id == other.channel_id
@@ -107,4 +119,4 @@ class Aquarium:
         return hash(self.channel_id)
 
     def __repr__(self):
-        return f"Aquarium (channel_id={self.channel_id})"
+        return f"Aquarium (channel_id={self.channel_id})\nBirth date:{self.birth_date}"
