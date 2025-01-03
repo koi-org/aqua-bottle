@@ -6,6 +6,7 @@ class Miscellaneous(commands.Cog):
     """
     A cog command for miscellaneous commands
     """
+
     def __init__(self, bot):
         """
         Initialises the Miscellaneous Cog.

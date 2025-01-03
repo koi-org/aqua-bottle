@@ -4,7 +4,17 @@ from classes.manager import Manager
 
 
 class UserCommands(commands.Cog):
+    """
+    A cog that provides commands for user commands
+    """
+
     def __init__(self, bot):
+        """
+        Initialises the UserCommands Cog.
+
+        Parameters:
+            bot (commands. Bot): THe Discord bot instance to which this Cog is added.
+        """
         self.bot = bot
 
     user = discord.SlashCommandGroup("user", "Manage your user account.")
@@ -15,6 +25,16 @@ class UserCommands(commands.Cog):
         guild_ids=[692964332643942463],
     )
     async def register(self, ctx: discord.ApplicationContext, username: str = None):
+        """
+        Slash command to register a new user.
+
+        Parameters:
+            ctx (discord.ApplicationContext): The context of the command.
+            volume (int): The volume of the aquarium in liters.
+
+        Responds with a success or failure message based on whether the user has
+        been successfully registered.
+        """
         discord_name = ctx.author.name
         user_id = ctx.author.id
 
@@ -30,4 +50,10 @@ class UserCommands(commands.Cog):
 
 
 def setup(bot):
+    """
+    Sets up the UserCommands Cog in the bot.
+
+    Parameters:
+        bot (commands.Bot): The Discord bot instance.
+    """
     bot.add_cog(UserCommands(bot))
