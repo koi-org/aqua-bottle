@@ -58,9 +58,33 @@ class AquariumCommands(commands.Cog):
         if not append_aquarium:
             await ctx.respond("Aquarium already exists!")
         else:
+            await ctx.respond(f"Aquarium of {volume} litres has been successfully created!")
+
+    @aquarium.command(
+        name="remove",
+        description="Remove this channel's aquarium.",
+        guild_ids=[692964332643942463],
+    )
+    async def remove(self, ctx: discord.ApplicationContext):
+        user_id = ctx.author.id
+        channel_id = ctx.channel.id
+        user = Manager.get_user(user_id)
+
+        # Check if user is valid
+        if user is None:
             await ctx.respond(
-                f"Aquarium of {volume} litres has been successfully created!"
+                "You are not a valid user, please register before creating an aquarium!"
             )
+            return
+
+        aquarium = user.get_aquarium(channel_id)
+        if aquarium is None:
+            await ctx.respond("Aquarium does not exist")
+        else:
+            await ctx.respond(f"Aquarium of age: {aquarium.age} time units is getting removed...")
+            aquarium.stop()
+            user.remove_aquarium(aquarium)
+            await ctx.respond("Aquarium successfully removed!")
 
     @fish.command(
         name="add",

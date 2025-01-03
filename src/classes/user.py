@@ -77,3 +77,4 @@ class User:
         for aquarium in self.aquariums:
             if aquarium.channel_id == channel_id:
                 return aquarium
+        return None
