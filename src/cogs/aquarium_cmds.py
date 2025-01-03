@@ -1,9 +1,8 @@
 import discord
 from discord.ext import commands
 from classes.manager import Manager
-from classes.aquarium import Aquarium
+from classes.aquarium import Aquarium, valid_fish, valid_substrate
 from classes.fish import Fish
-
 
 class AquariumCommands(commands.Cog):
     """
@@ -30,7 +29,7 @@ class AquariumCommands(commands.Cog):
         description="Create your own aquarium with your registered account!",
         guild_ids=[692964332643942463],
     )
-    async def create_aquarium(self, ctx: discord.ApplicationContext, volume: int):
+    async def create_aquarium(self, ctx: discord.ApplicationContext, volume: int = 50):
         """
         Slash command to create a new aquarium.
 
@@ -68,7 +67,11 @@ class AquariumCommands(commands.Cog):
         guild_ids=[692964332643942463],
     )
     async def add_fish(
-        self, ctx: discord.ApplicationContext, species: str, gender: str, age: str
+        self,
+        ctx: discord.ApplicationContext,
+        species: discord.Option(str, choices = valid_fish),
+        gender: discord.Option(str, choices = ['Male', 'Female']),
+        age: int = 0
     ):
         """
         Slash command to add a fish to an existing aquarium.
@@ -97,8 +100,9 @@ class AquariumCommands(commands.Cog):
         if not aquarium:
             await ctx.respond("Aquarium does not exist!")
             return
-
-        if species not in Aquarium.valid_fish:
+        
+        # check if the species is valid
+        if species not in valid_fish:
             await ctx.respond(f"{species} is not a valid fish!")
         else:
             aquarium.add_fish(Fish(species, gender, int(age)))

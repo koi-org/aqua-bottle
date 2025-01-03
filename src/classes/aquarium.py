@@ -1,6 +1,9 @@
 from classes.fish import Fish
 
 
+valid_fish = {"Guppy", "Neon Tetra", "Molly", "Platy"}
+valid_substrate = {"Gravel", "Sand", "Soil"}
+
 class Aquarium:
     """
     A class to represent an aquarium.
@@ -30,9 +33,6 @@ class Aquarium:
         add_fish(fish: Fish):
             adds fish to the aquarium
     """
-
-    valid_fish = {"guppy", "neon_tetra", "molly", "platy"}
-    valid_substrate = {"gravel", "sand", "soil"}
 
     def __init__(
         self,
