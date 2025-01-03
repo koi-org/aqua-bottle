@@ -110,6 +110,9 @@ class Aquarium:
 
             time.sleep(Aquarium.time_unit)
 
+    def print_age(self):
+        print(f"The aquarium in channel: {self.channel_id} is {self.age} time units old.")
+
     def __eq__(self, other):
         if isinstance(other, Aquarium):
             return self.channel_id == other.channel_id
