@@ -24,12 +24,12 @@ class AquariumCommands(commands.Cog):
     fish = aquarium.create_subgroup("fish", "Manage the fish in your aquarium.")
     plant = aquarium.create_subgroup("plant", "Manage the plants in your aquarium.")
 
-    @discord.slash_command(
-        name="create_aquarium",
+    @aquarium.command(
+        name="create",
         description="Create your own aquarium with your registered account!",
         guild_ids=[692964332643942463],
     )
-    async def create_aquarium(self, ctx: discord.ApplicationContext, volume: int = 50):
+    async def create(self, ctx: discord.ApplicationContext, volume: int = 50):
         """
         Slash command to create a new aquarium.
 
@@ -61,8 +61,8 @@ class AquariumCommands(commands.Cog):
                 f"Aquarium of {volume} litres has been successfully created!"
             )
 
-    @discord.slash_command(
-        name="add_fish",
+    @fish.command(
+        name="add",
         description="Add fish to your own aquarium!",
         guild_ids=[692964332643942463],
     )
