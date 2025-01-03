@@ -4,6 +4,7 @@ from classes.manager import Manager
 from classes.aquarium import Aquarium, valid_fish, valid_substrate
 from classes.fish import Fish
 
+
 class AquariumCommands(commands.Cog):
     """
     A Cog that provides commands for managing aquariums, fish, and plants in a Discord bot.
@@ -69,9 +70,9 @@ class AquariumCommands(commands.Cog):
     async def add_fish(
         self,
         ctx: discord.ApplicationContext,
-        species: discord.Option(str, choices = valid_fish),
-        gender: discord.Option(str, choices = ['Male', 'Female']),
-        age: int = 0
+        species: discord.Option(str, choices=valid_fish),
+        gender: discord.Option(str, choices=["Male", "Female"]),
+        age: int = 0,
     ):
         """
         Slash command to add a fish to an existing aquarium.
@@ -100,7 +101,7 @@ class AquariumCommands(commands.Cog):
         if not aquarium:
             await ctx.respond("Aquarium does not exist!")
             return
-        
+
         # check if the species is valid
         if species not in valid_fish:
             await ctx.respond(f"{species} is not a valid fish!")

@@ -4,6 +4,7 @@ from classes.fish import Fish
 valid_fish = {"Guppy", "Neon Tetra", "Molly", "Platy"}
 valid_substrate = {"Gravel", "Sand", "Soil"}
 
+
 class Aquarium:
     """
     A class to represent an aquarium.

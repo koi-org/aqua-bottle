@@ -19,7 +19,7 @@ class UserCommands(commands.Cog):
 
     user = discord.SlashCommandGroup("user", "Manage your user account.")
 
-    @discord.slash_command(
+    @user.command(
         name="register",
         description="Register your account for the aquarium game!",
         guild_ids=[692964332643942463],
