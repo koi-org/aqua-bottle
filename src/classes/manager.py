@@ -3,7 +3,21 @@ from typing import Dict
 
 
 class Manager:
-    # Manage all users here
+    """
+    A class to manage all users
+
+    Methods
+    .......
+    add_user(user_id, username):
+        Adds a user instance to the users dictionary
+    
+    get_user(user_id):
+        Returns the instance of a user based on their id
+
+    list_aquariums:
+        lists the aquariums owned by the user. this method
+        is more for debugging
+    """
     users: Dict[int, User] = {}
 
     @staticmethod
