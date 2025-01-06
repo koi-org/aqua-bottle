@@ -92,7 +92,7 @@ class Aquarium:
         if self.water_quality < 0:
             self.water_quality = 0
 
-    def add_decoration(self, decoration):
+    def add_decoration(self, decoration: Decoration):
         self.decoration.add(decoration)
 
     def update_timer(self):
