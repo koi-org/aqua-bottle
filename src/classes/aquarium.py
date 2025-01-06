@@ -80,14 +80,20 @@ class Aquarium:
     def add_decoration(self, decoration):
         self.decoration.add(decoration)
 
-    def update_age(self):
-        current_time = datetime.datetime.now()
-        delta = current_time - self.birth_date
-        self.age = int(delta.total_seconds() // Aquarium.time_unit)
+    def update_timer(self):
+        while self.running:
+            current_time = datetime.datetime.now()
 
-        self.print_age()
+            delta = current_time - self.birth_date
+            self.age = int(delta.total_seconds() // Aquarium.TIME_UNIT)
+            self.print_age()
 
-        time.sleep(Aquarium.time_unit)
+            # monitor water
+            if current_time - self.start_cycle > datetime.timedelta(seconds=15):
+                self.cycled = True
+            self.monitor_water()
+
+            time.sleep(1)
 
     def print_age(self):
         print(
