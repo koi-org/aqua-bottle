@@ -35,7 +35,7 @@ class AquariumCommands(commands.Cog):
         ctx: discord.ApplicationContext,
         substrate: str = discord.Option(str, choices=Aquarium.valid_substrate),
         volume: int = 50,
-        ):
+    ):
         """
         Slash command to create a new aquarium.
 
@@ -63,7 +63,9 @@ class AquariumCommands(commands.Cog):
         if not append_aquarium:
             await ctx.respond("Aquarium already exists!")
         else:
-            await ctx.respond(f"Aquarium of {volume} litres with substrate {substrate} has been successfully created!")
+            await ctx.respond(
+                f"Aquarium of {volume} litres with substrate {substrate} has been successfully created!"
+            )
 
     @aquarium.command(
         name="remove",
@@ -86,7 +88,9 @@ class AquariumCommands(commands.Cog):
         if aquarium is None:
             await ctx.respond("Aquarium does not exist")
         else:
-            await ctx.respond(f"Aquarium of age: {aquarium.age} time units is getting removed...")
+            await ctx.respond(
+                f"Aquarium of age: {aquarium.age} time units is getting removed..."
+            )
             aquarium.stop()
             user.remove_aquarium(aquarium)
             await ctx.respond("Aquarium successfully removed!")

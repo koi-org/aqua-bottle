@@ -20,6 +20,7 @@ class Fish:
         self.species = species
         self.gender = gender
         self.age = age_months
+        self.fed = False
 
     def __str__(self):
         return (

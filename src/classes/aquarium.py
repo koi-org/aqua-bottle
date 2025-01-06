@@ -7,6 +7,7 @@ import time
 valid_substrate = {"Gravel", "Sand", "Soil"}
 valid_decoration = {"driftwood", "rock"}
 
+
 class Aquarium:
     time_unit = 5
 
@@ -16,7 +17,7 @@ class Aquarium:
         self.volume = volume
         self.substrate = substrate
         self.heater = False
-        self.water_quality = 0
+        self.water_quality = 100
         self.inhabitants = {"fish": set(), "plants": set()}
         self.decoration = set()
 
@@ -27,13 +28,9 @@ class Aquarium:
         self.timer_thread = threading.Thread(target=self.update_age)
         self.timer_thread.start()
 
-    def choose_substrate(self, substrate: str):
-        """Method to choose the aquarium's substrate"""
-        self.substrate = substrate
-
-    def add_heater(self):
-        """Method to add a heater to the fish tank"""
-        self.heater = True
+    # def add_heater(self):
+    #     """Method to add a heater to the fish tank"""
+    #     self.heater = True
 
     def add_fish(self, fish: Fish):
         """
@@ -53,17 +50,22 @@ class Aquarium:
     def add_plant(self, plant: Plant):
         """
         Method to add plant
-        
+
         Parameters
         ---------
         plant: Plant
         """
         self.inhabitants["plant"].add(plant)
-    
+
+    def feed(self):
+        if self.inhabitants["fish"] == set():
+            self.water_quality -= 10
+        else:
+            for fish in self.inhabitants["fish"]:
+                fish.fed = True
 
     def add_decoration(self, decoration):
         self.decoration.add(decoration)
-
 
     def update_age(self):
         while self.running:
@@ -76,7 +78,9 @@ class Aquarium:
             time.sleep(Aquarium.time_unit)
 
     def print_age(self):
-        print(f"The aquarium in channel: {self.channel_id} is {self.age} time units old.")
+        print(
+            f"The aquarium in channel: {self.channel_id} is {self.age} time units old."
+        )
 
     def stop(self):
         self.running = False
