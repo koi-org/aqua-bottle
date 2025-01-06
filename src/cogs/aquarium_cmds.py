@@ -3,6 +3,7 @@ from discord.ext import commands
 from classes.manager import Manager
 from classes.aquarium import Aquarium
 from classes.fish import Fish
+from classes.plant import Plant
 
 
 class AquariumCommands(commands.Cog):
@@ -95,6 +96,35 @@ class AquariumCommands(commands.Cog):
             user.remove_aquarium(aquarium)
             await ctx.respond("Aquarium successfully removed!")
 
+    @aquarium.command(
+        name="feed",
+        description="Feed fish",
+        guild_ids=[692964332643942463],
+    )
+    async def feed_fish(self, ctx: discord.ApplicationContext):
+        user_id = ctx.author.id
+        channel_id = ctx.channel.id
+        user = Manager.get_user(user_id)
+
+        # Check if user is valid
+        if user is None:
+            await ctx.respond(
+                "You are not a valid user, please register before creating an aquarium!"
+            )
+            return
+
+        aquarium = user.get_aquarium(channel_id)
+        if aquarium is None:
+            await ctx.respond("Aquarium does not exist")
+            return
+
+        if aquarium.inhabitants["fish"] == set():
+            await ctx.respond("No fish in aquarium, starting nitrogen cycle")
+        else:
+            await ctx.respond("Fed fish")
+
+        aquarium.feed()
+
     @fish.command(
         name="add",
         description="Add fish to your own aquarium!",
@@ -128,6 +158,36 @@ class AquariumCommands(commands.Cog):
         await ctx.respond(
             f"Fish of species: {species}, gender: {gender}, age: {age} is successfully added!"
         )
+
+    @plant.command(
+        name="add",
+        description="Add plants to your aquarium!",
+        guild_ids=[692964332643942463],
+    )
+    async def add_plant(
+        self,
+        ctx: discord.ApplicationContext,
+        species: str = discord.Option(str, choices=Plant.VALID_PLANTS),
+    ):
+        # check if user exists
+        user_id = ctx.author.id
+        channel_id = ctx.channel.id
+        user = Manager.get_user(user_id)
+
+        if user is None:
+            await ctx.respond(
+                "You are not a valid user, please register before creating an aquarium!"
+            )
+            return
+
+        # check if the aquarium exists
+        aquarium = user.get_aquarium(channel_id)
+        if not aquarium:
+            await ctx.respond("Aquarium does not exist!")
+            return
+
+        aquarium.add_plant(Plant(species))
+        await ctx.respond(f"Plant of species: {species} is successfully added!")
 
 
 def setup(bot):

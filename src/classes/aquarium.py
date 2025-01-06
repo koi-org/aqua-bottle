@@ -14,9 +14,8 @@ class Aquarium:
         self.channel_id = channel_id
         self.volume = volume
         self.substrate = substrate
-        self.start_cycle: datetime = datetime.datetime.max
+        self.start_cycle = None
         self.cycled = False
-        self.heater = False
         self.water_quality = 100
         self.inhabitants = {"fish": set(), "plants": set()}
         self.decoration = set()
@@ -27,10 +26,6 @@ class Aquarium:
         self.running = True
         self.timer_thread = threading.Thread(target=self.update_timer)
         self.timer_thread.start()
-
-    # def add_heater(self):
-    #     """Method to add a heater to the fish tank"""
-    #     self.heater = True
 
     def add_fish(self, fish: Fish):
         """
@@ -55,7 +50,7 @@ class Aquarium:
         ---------
         plant: Plant
         """
-        self.inhabitants["plant"].add(plant)
+        self.inhabitants["plants"].add(plant)
 
     def feed(self):
         if len(self.inhabitants["fish"]) == 0:
@@ -85,9 +80,10 @@ class Aquarium:
             self.debug_timer()
 
             # monitor water
-            if current_time - self.start_cycle > datetime.timedelta(seconds=15):
-                self.cycled = True
-            self.monitor_water()
+            if self.start_cycle:
+                if current_time - self.start_cycle > datetime.timedelta(seconds=15):
+                    self.cycled = True
+                self.monitor_water()
 
             time.sleep(1)
 
