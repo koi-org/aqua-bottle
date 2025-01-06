@@ -28,8 +28,6 @@ class Aquarium:
         self.timer_thread = threading.Thread(target=self.update_timer)
         self.timer_thread.start()
 
-        self.water_thread = None
-
     # def add_heater(self):
     #     """Method to add a heater to the fish tank"""
     #     self.heater = True
