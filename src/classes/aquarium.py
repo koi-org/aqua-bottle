@@ -12,9 +12,10 @@ class Aquarium:
 
     def __init__(self, channel_id: int, volume: int, substrate: str):
         self.channel_id = channel_id
-        self.cycled = False
         self.volume = volume
         self.substrate = substrate
+        self.start_cycle: datetime = datetime.datetime.max
+        self.cycled = False
         self.heater = False
         self.water_quality = 100
         self.inhabitants = {"fish": set(), "plants": set()}
@@ -30,20 +31,6 @@ class Aquarium:
     # def add_heater(self):
     #     """Method to add a heater to the fish tank"""
     #     self.heater = True
-
-    def update_timer(self):
-        while self.running:
-            self.update_age()
-            if Aquarium.START_CYCLE:
-                self.monitor_water()
-
-    def monitor_water(self):
-        if not self.cycled:
-            self.water_quality -= 1
-            time.sleep(10)
-        else:
-            self.water_quality -= 1
-            time.sleep(60)
 
     def add_fish(self, fish: Fish):
         """
@@ -71,8 +58,8 @@ class Aquarium:
         self.inhabitants["plant"].add(plant)
 
     def feed(self):
-        if self.inhabitants["fish"] == set():
-            Aquarium.START_CYCLE = True
+        if len(self.inhabitants["fish"]) == 0:
+            self.start_cycle = datetime.datetime.now()
         else:
             for fish in self.inhabitants["fish"]:
                 fish.fed = True
