@@ -1,5 +1,5 @@
 class Fish:
-    valid_fish = {"Guppy", "Neon Tetra", "Molly", "Platy"}
+    VALID_FISH = {"Guppy", "Neon Tetra", "Molly", "Platy"}
 
     def __init__(self, species: str, gender: str, age_months: int):
         """

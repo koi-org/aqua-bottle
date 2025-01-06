@@ -33,7 +33,7 @@ class AquariumCommands(commands.Cog):
     async def create(
         self,
         ctx: discord.ApplicationContext,
-        substrate: str = discord.Option(str, choices=Aquarium.valid_substrate),
+        substrate: str = discord.Option(str, choices=Aquarium.VALID_SUBSTRATE),
         volume: int = 50,
     ):
         """
@@ -103,7 +103,7 @@ class AquariumCommands(commands.Cog):
     async def add_fish(
         self,
         ctx: discord.ApplicationContext,
-        species: str = discord.Option(str, choices=Fish.valid_fish),
+        species: str = discord.Option(str, choices=Fish.VALID_FISH),
         gender: str = discord.Option(choices=["Male", "Female"]),
         age: int = 0,
     ):

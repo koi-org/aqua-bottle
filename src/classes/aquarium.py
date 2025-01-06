@@ -6,10 +6,9 @@ import time
 
 
 class Aquarium:
-    valid_substrate = {"Gravel", "Sand", "Soil"}
-    valid_decoration = {"driftwood", "rock"}
-    START_CYCLE = False
-    time_unit = 5
+    VALID_SUBSTRATE = {"Gravel", "Sand", "Soil"}
+    VALID_DECORATION = {"driftwood", "rock"}
+    TIME_UNIT = 5
 
     def __init__(self, channel_id: int, volume: int, substrate: str):
         self.channel_id = channel_id
