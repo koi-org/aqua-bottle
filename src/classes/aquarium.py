@@ -78,10 +78,15 @@ class Aquarium:
                 fish.fed = True
 
     def monitor_water(self):
+        water_quality_decrement_multiplier = 1
+
+        if self.inhabitants["plants"] is not set():
+            water_quality_decrement_multiplier = 0.5
+
         if not self.cycled:
-            self.water_quality -= 3
+            self.water_quality -= 3 * water_quality_decrement_multiplier
         else:
-            self.water_quality -= 1
+            self.water_quality -= 1 * water_quality_decrement_multiplier
 
         if self.water_quality < 0:
             self.water_quality = 0

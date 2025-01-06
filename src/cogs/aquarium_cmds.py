@@ -125,6 +125,37 @@ class AquariumCommands(commands.Cog):
 
         aquarium.feed()
 
+    @aquarium.command(
+        name="water_change",
+        description="do a water change",
+        guild_ids=[692964332643942463],
+    )
+    async def water_change(self, ctx: discord.ApplicationContext, volume: int):
+        user_id = ctx.author.id
+        channel_id = ctx.channel.id
+        user = Manager.get_user(user_id)
+
+        # Check if user is valid
+        if user is None:
+            await ctx.respond(
+                "You are not a valid user, please register before creating an aquarium!"
+            )
+            return
+
+        aquarium = user.get_aquarium(channel_id)
+        if aquarium is None:
+            await ctx.respond("Aquarium does not exist")
+            return
+
+        if not aquarium.water_change(volume):
+            await ctx.respond(
+                f"""Volume higher than your tank! Please input a number less than {aquarium.volume}!"""
+            )
+        else:
+            await ctx.respond(
+                f"""Completed water change! your new water quality is {aquarium.water_quality}"""
+            )
+
     @fish.command(
         name="add",
         description="Add fish to your own aquarium!",
