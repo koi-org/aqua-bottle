@@ -28,9 +28,20 @@ class Aquarium:
         self.timer_thread = threading.Thread(target=self.update_age)
         self.timer_thread.start()
 
+        self.water_thread = None
+
     # def add_heater(self):
     #     """Method to add a heater to the fish tank"""
     #     self.heater = True
+
+    def monitor_water(self):
+        while self.running:
+            if not self.cycled:
+                self.water_quality -= 1
+                time.sleep(10)
+            else:
+                self.water_quality -= 1
+                time.sleep(60)
 
     def add_fish(self, fish: Fish):
         """
@@ -59,7 +70,7 @@ class Aquarium:
 
     def feed(self):
         if self.inhabitants["fish"] == set():
-            self.water_quality -= 10
+            self.water_thread = threading.Thread(target=self.monitor_water)
         else:
             for fish in self.inhabitants["fish"]:
                 fish.fed = True
