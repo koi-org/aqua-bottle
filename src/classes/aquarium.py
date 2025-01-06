@@ -1,5 +1,6 @@
 from classes.fish import Fish
 from classes.plant import Plant
+from classes.decoration import Decoration
 import datetime
 import threading
 import time
