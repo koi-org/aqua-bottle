@@ -1,10 +1,13 @@
 from classes.fish import Fish
+from classes.plant import Plant
 import datetime
 import threading
 import time
 
+valid_substrate = {"Gravel", "Sand", "Soil"}
+valid_decoration = {"driftwood", "rock"}
+
 class Aquarium:
-    valid_substrate = {"Gravel", "Sand", "Soil"}
     time_unit = 5
 
     def __init__(self, channel_id: int, volume: int, substrate: str):
@@ -15,6 +18,7 @@ class Aquarium:
         self.heater = False
         self.water_quality = 0
         self.inhabitants = {"fish": set(), "plants": set()}
+        self.decoration = set()
 
         # timer
         self.birth_date = datetime.datetime.now()
@@ -45,6 +49,21 @@ class Aquarium:
         None
         """
         self.inhabitants["fish"].add(fish)
+
+    def add_plant(self, plant: Plant):
+        """
+        Method to add plant
+        
+        Parameters
+        ---------
+        plant: Plant
+        """
+        self.inhabitants["plant"].add(plant)
+    
+
+    def add_decoration(self, decoration):
+        self.decoration.add(decoration)
+
 
     def update_age(self):
         while self.running:
