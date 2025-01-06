@@ -1,7 +1,5 @@
 class Fish:
-    """
-    A class to represent fish
-    """
+    valid_fish = {"Guppy", "Neon Tetra", "Molly", "Platy"}
 
     def __init__(self, species: str, gender: str, age_months: int):
         """

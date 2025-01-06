@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 from classes.manager import Manager
-from classes.aquarium import Aquarium, valid_fish, valid_substrate
+from classes.aquarium import Aquarium
 from classes.fish import Fish
 
 
@@ -99,21 +99,10 @@ class AquariumCommands(commands.Cog):
     async def add_fish(
         self,
         ctx: discord.ApplicationContext,
-        species: discord.Option(str, choices=valid_fish),
-        gender: discord.Option(str, choices=["Male", "Female"]),
+        species: str = discord.Option(str, choices=Fish.valid_fish),
+        gender: str = discord.Option(choices=["Male", "Female"]),
         age: int = 0,
     ):
-        """
-        Slash command to add a fish to an existing aquarium.
-
-        Parameters:
-            ctx (discord.ApplicationContext): The context of the command.
-            species (str): The species of the fish to add.
-            gender (str): The gender of the fish.
-            age (str): The age of the fish.
-
-        Responds with a success or failure message based on the validity of the input and the aquarium's existence.
-        """
         # check if user exists
         user_id = ctx.author.id
         channel_id = ctx.channel.id
@@ -131,14 +120,10 @@ class AquariumCommands(commands.Cog):
             await ctx.respond("Aquarium does not exist!")
             return
 
-        # check if the species is valid
-        if species not in valid_fish:
-            await ctx.respond(f"{species} is not a valid fish!")
-        else:
-            aquarium.add_fish(Fish(species, gender, int(age)))
-            await ctx.respond(
-                f"Fish of species: {species}, gender: {gender}, age: {age} is successfully added!"
-            )
+        aquarium.add_fish(Fish(species, gender, int(age)))
+        await ctx.respond(
+            f"Fish of species: {species}, gender: {gender}, age: {age} is successfully added!"
+        )
 
 
 def setup(bot):
