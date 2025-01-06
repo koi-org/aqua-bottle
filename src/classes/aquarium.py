@@ -5,7 +5,6 @@ import threading
 import time
 
 
-
 class Aquarium:
     valid_substrate = {"Gravel", "Sand", "Soil"}
     valid_decoration = {"driftwood", "rock"}
@@ -38,7 +37,7 @@ class Aquarium:
     def update_timer(self):
         while self.running:
             self.update_age()
-            if Aquarium.START_CYCLE: 
+            if Aquarium.START_CYCLE:
                 self.monitor_water()
 
     def monitor_water(self):
