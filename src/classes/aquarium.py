@@ -52,6 +52,24 @@ class Aquarium:
         """
         self.inhabitants["plants"].add(plant)
 
+    def water_change(self, litres):
+        if litres > self.volume:
+            return False
+
+        self.water_quality = self.new_water_quality(litres)
+        return True
+
+    def new_water_quality(self, litres):
+        quality_old = self.water_quality
+        quality_new = 100
+        volume_old = self.volume - litres
+        volume_new = litres
+
+        new_quality_numerator = (quality_old * volume_old) + (quality_new * volume_new)
+        new_quality_denominator = volume_new + volume_old
+
+        return new_quality_numerator / new_quality_denominator
+
     def feed(self):
         if len(self.inhabitants["fish"]) == 0:
             self.start_cycle = datetime.datetime.now()
