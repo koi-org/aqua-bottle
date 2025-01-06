@@ -30,7 +30,12 @@ class AquariumCommands(commands.Cog):
         description="Create your own aquarium with your registered account!",
         guild_ids=[692964332643942463],
     )
-    async def create(self, ctx: discord.ApplicationContext, volume: int = 50):
+    async def create(
+        self,
+        ctx: discord.ApplicationContext,
+        substrate: str = discord.Option(str, choices=Aquarium.valid_substrate),
+        volume: int = 50,
+        ):
         """
         Slash command to create a new aquarium.
 
@@ -52,13 +57,13 @@ class AquariumCommands(commands.Cog):
             return
 
         # check if the aquarium already exists
-        aquarium = Aquarium(channel_id, volume)
+        aquarium = Aquarium(channel_id, volume, substrate)
         append_aquarium = user.add_aquarium(aquarium)
 
         if not append_aquarium:
             await ctx.respond("Aquarium already exists!")
         else:
-            await ctx.respond(f"Aquarium of {volume} litres has been successfully created!")
+            await ctx.respond(f"Aquarium of {volume} litres with substrate {substrate} has been successfully created!")
 
     @aquarium.command(
         name="remove",
