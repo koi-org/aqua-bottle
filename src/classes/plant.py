@@ -1,9 +1,10 @@
 class Plant:
 
-    VALID_PLANTS = [
-        "java_fern" "java_moss",
-        "anubias",
-    ]
+    VALID_PLANTS = {
+        "Java Fern",
+        "Java Moss",
+        "Anubias",
+    }
     """
     Represents a plant species.
 
