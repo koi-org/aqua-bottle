@@ -82,7 +82,7 @@ class Aquarium:
 
             delta = current_time - self.birth_date
             self.age = int(delta.total_seconds() // Aquarium.TIME_UNIT)
-            self.print_age()
+            self.debug_timer()
 
             # monitor water
             if current_time - self.start_cycle > datetime.timedelta(seconds=15):
@@ -91,9 +91,12 @@ class Aquarium:
 
             time.sleep(1)
 
-    def print_age(self):
+    def debug_timer(self):
         print(
-            f"The aquarium in channel: {self.channel_id} is {self.age} time units old."
+            f"The aquarium in channel: {self.channel_id} is {self.age} time units old.\n"
+            f"Cycled? {self.cycled}\n"
+            f"Water quality: {self.water_quality}\n"
+            f"---"
         )
 
     def stop(self):
