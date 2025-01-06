@@ -4,11 +4,12 @@ import datetime
 import threading
 import time
 
-valid_substrate = {"Gravel", "Sand", "Soil"}
-valid_decoration = {"driftwood", "rock"}
 
 
 class Aquarium:
+    valid_substrate = {"Gravel", "Sand", "Soil"}
+    valid_decoration = {"driftwood", "rock"}
+    START_CYCLE = False
     time_unit = 5
 
     def __init__(self, channel_id: int, volume: int, substrate: str):
@@ -25,7 +26,7 @@ class Aquarium:
         self.birth_date = datetime.datetime.now()
         self.age = 0
         self.running = True
-        self.timer_thread = threading.Thread(target=self.update_age)
+        self.timer_thread = threading.Thread(target=self.update_timer)
         self.timer_thread.start()
 
         self.water_thread = None
@@ -34,14 +35,19 @@ class Aquarium:
     #     """Method to add a heater to the fish tank"""
     #     self.heater = True
 
-    def monitor_water(self):
+    def update_timer(self):
         while self.running:
-            if not self.cycled:
-                self.water_quality -= 1
-                time.sleep(10)
-            else:
-                self.water_quality -= 1
-                time.sleep(60)
+            self.update_age()
+            if Aquarium.START_CYCLE: 
+                self.monitor_water()
+
+    def monitor_water(self):
+        if not self.cycled:
+            self.water_quality -= 1
+            time.sleep(10)
+        else:
+            self.water_quality -= 1
+            time.sleep(60)
 
     def add_fish(self, fish: Fish):
         """
@@ -70,7 +76,7 @@ class Aquarium:
 
     def feed(self):
         if self.inhabitants["fish"] == set():
-            self.water_thread = threading.Thread(target=self.monitor_water)
+            Aquarium.START_CYCLE = True
         else:
             for fish in self.inhabitants["fish"]:
                 fish.fed = True
@@ -79,14 +85,13 @@ class Aquarium:
         self.decoration.add(decoration)
 
     def update_age(self):
-        while self.running:
-            current_time = datetime.datetime.now()
-            delta = current_time - self.birth_date
-            self.age = int(delta.total_seconds() // Aquarium.time_unit)
+        current_time = datetime.datetime.now()
+        delta = current_time - self.birth_date
+        self.age = int(delta.total_seconds() // Aquarium.time_unit)
 
-            self.print_age()
+        self.print_age()
 
-            time.sleep(Aquarium.time_unit)
+        time.sleep(Aquarium.time_unit)
 
     def print_age(self):
         print(
