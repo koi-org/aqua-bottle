@@ -64,6 +64,15 @@ class Aquarium:
             for fish in self.inhabitants["fish"]:
                 fish.fed = True
 
+    def monitor_water(self):
+        if not self.cycled:
+            self.water_quality -= 3
+        else:
+            self.water_quality -= 1
+
+        if self.water_quality < 0:
+            self.water_quality = 0
+
     def add_decoration(self, decoration):
         self.decoration.add(decoration)
 
