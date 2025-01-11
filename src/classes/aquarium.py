@@ -81,7 +81,7 @@ class Aquarium:
     def monitor_water(self):
         water_quality_decrement_multiplier = 1
 
-        if self.inhabitants["plants"] is not set():
+        if len(self.inhabitants["plants"]) > 0:
             water_quality_decrement_multiplier = 0.5
 
         if not self.cycled:
