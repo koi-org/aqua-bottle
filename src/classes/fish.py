@@ -2,12 +2,9 @@ from classes.aquarium import Aquarium
 
 
 class Fish:
-    time_unit = Aquarium.TIME_UNIT
-    aq_year = 365 * time_unit
-    aq_month = 30 * time_unit
     VALID_FISH = {"Guppy", "Neon Tetra", "Molly", "Platy"}
 
-    def __init__(self, species: str, gender: str, age_months: int):
+    def __init__(self, species: str, gender: str, months: int):
         """
         Initialises fish instance with species gender and age in months
 
@@ -27,11 +24,11 @@ class Fish:
         """
         self.species = species
         self.gender = gender
-        self.age = Fish.aq_month * age_months
+        self.age = months
         self.hunger: int = 10
         self.hp: float = 100
         self.survivability = 100
-        self.lifespan = 2 * Fish.aq_year
+        self.lifespan = 2 * Aquarium.YEAR
         self.alive: bool = True
 
     def __str__(self):

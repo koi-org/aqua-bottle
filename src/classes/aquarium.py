@@ -11,6 +11,8 @@ class Aquarium:
     VALID_SUBSTRATE = {"Gravel", "Sand", "Soil"}
     VALID_DECORATION = {"driftwood", "rock"}
     TIME_UNIT = 5
+    MONTH = TIME_UNIT * 30
+    YEAR = MONTH * 12
 
     def __init__(self, channel_id: int, volume: int, substrate: str):
         self.channel_id = channel_id
