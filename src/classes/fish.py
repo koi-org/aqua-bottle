@@ -28,9 +28,9 @@ class Fish:
         self.species = species
         self.gender = gender
         self.age = Fish.aq_month * age_months
-        self.hunger = 10
-        self.hp = 100
-        self.death_rate = 0
+        self.hunger: int = 10
+        self.hp: float = 100
+        self.survivability = 100
         self.lifespan = 2 * Fish.aq_year
 
     def __str__(self):
