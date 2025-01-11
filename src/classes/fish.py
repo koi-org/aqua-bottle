@@ -1,6 +1,3 @@
-from classes.aquarium import Aquarium
-
-
 class Fish:
     VALID_FISH = {"Guppy", "Neon Tetra", "Molly", "Platy"}
 
@@ -28,16 +25,16 @@ class Fish:
         self.hunger: int = 10
         self.hp: float = 100
         self.survivability = 100
-        self.lifespan = 2 * Aquarium.YEAR
+        self.lifespan = 720
         self.alive: bool = True
 
-    def judgement(self, aquarium: Aquarium):
+    def judgement(self, water_quality: float):
             # check water quality
             self.age += 1
 
-            if 50 <= aquarium.water_quality < 70:
+            if 50 <= water_quality < 70:
                 self.hp -= 0.5
-            elif aquarium.water_quality < 50:
+            elif water_quality < 50:
                 self.hp -= 1
 
             # check hunger

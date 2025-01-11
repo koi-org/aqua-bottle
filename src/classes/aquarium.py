@@ -118,7 +118,7 @@ class Aquarium:
                 self.monitor_water()
 
             # monitor fish
-            self.monitor_fish(self.fish)
+            self.monitor_fish()
 
             time.sleep(Aquarium.TIME_UNIT)
 
