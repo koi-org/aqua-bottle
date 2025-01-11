@@ -96,40 +96,6 @@ class Aquarium:
         if self.water_quality < 0:
             self.water_quality = 0
 
-    def monitor_fish(self, fish_set):
-        for fish in fish_set:
-            # check water quality
-            fish.age += Aquarium.TIME_UNIT
-
-            if 50 <= self.water_quality < 70:
-                fish.hp -= 0.5
-            elif self.water_quality < 50:
-                fish.hp -= 1
-
-            # check hunger
-            if 5 <= fish.hunger <= 7:
-                fish.hp -= 0.5
-            elif 0 < fish.hunger < 5:
-                fish.hp -= 1
-            elif fish.hunger == 0:
-                # fish is starving, add death penalty to the fish
-                fish.death_rate += 0.33
-                fish.starving = True
-
-            fish_age = (fish.age / fish.lifespan) * 100
-
-            if 50 <= fish_age < 60:
-                fish.death_rate += 0.02
-            elif 60 <= fish_age < 70:
-                fish.death_rate += 0.03
-            elif 70 <= fish_age < 80:
-                fish.death_rate += 0.04
-            elif 80 <= fish_age < 90:
-                fish.death_rate += 0.05
-            elif 90 <= fish_age < 100:
-                fish.death_rate += 0.06
-            elif fish_age > 100:
-                fish.death_rate += 0.10
 
     def add_decoration(self, decoration: Decoration):
         self.decoration.add(decoration)
