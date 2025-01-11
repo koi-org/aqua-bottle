@@ -109,7 +109,7 @@ class Aquarium:
                     self.cycled = True
                 self.monitor_water()
 
-            time.sleep(1)
+            time.sleep(Aquarium.TIME_UNIT)
 
     def debug_timer(self):
         print(
