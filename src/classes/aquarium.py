@@ -133,7 +133,7 @@ class Aquarium:
             # check if the length of set is greater than 0
             fish_set = self.inhabitants["fish"]
             if len(fish_set) > 0:
-                
+                self.monitor_hp(fish_set)
 
 
             time.sleep(Aquarium.TIME_UNIT)
