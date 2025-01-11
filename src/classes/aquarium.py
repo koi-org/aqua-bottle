@@ -96,6 +96,9 @@ class Aquarium:
         if self.water_quality < 0:
             self.water_quality = 0
 
+    def monitor_fish(self):
+        if len(self.fish) > 0:
+            for fish in self.fish: fish.judgement()
 
     def add_decoration(self, decoration: Decoration):
         self.decoration.add(decoration)
@@ -114,10 +117,8 @@ class Aquarium:
                     self.cycled = True
                 self.monitor_water()
 
-            # check if the length of set is greater than 0
-            fish_set = self.fish
-            if len(fish_set) > 0:
-                self.monitor_fish(fish_set)
+            # monitor fish
+            self.monitor_fish(self.fish)
 
             time.sleep(Aquarium.TIME_UNIT)
 
