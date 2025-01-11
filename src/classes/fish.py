@@ -1,5 +1,6 @@
 from classes.aquarium import Aquarium
 
+
 class Fish:
     time_unit = Aquarium.TIME_UNIT
     aq_year = 365 * time_unit
