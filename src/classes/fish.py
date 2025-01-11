@@ -32,6 +32,7 @@ class Fish:
         self.hp: float = 100
         self.survivability = 100
         self.lifespan = 2 * Fish.aq_year
+        self.alive: bool = True
 
     def __str__(self):
         return (

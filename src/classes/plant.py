@@ -22,3 +22,4 @@ class Plant:
         Prints an error message if the species is not in the valid plants list.
         """
         self.species = species
+        self.alive: bool = True
