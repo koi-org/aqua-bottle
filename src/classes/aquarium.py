@@ -1,6 +1,7 @@
 from classes.fish import Fish
 from classes.plant import Plant
 from classes.decoration import Decoration
+from typing import Set
 import datetime
 import threading
 import time
@@ -18,8 +19,9 @@ class Aquarium:
         self.start_cycle = None
         self.cycled = False
         self.water_quality = 100
-        self.inhabitants = {"fish": set(), "plants": set()}
-        self.decoration = set()
+        self.fish: Set[Fish] = set()
+        self.plants: Set[Plant] = set()
+        self.decoration: Set[Decoration] = set()
 
         # timer
         self.birth_date = datetime.datetime.now()
@@ -41,7 +43,7 @@ class Aquarium:
         ------
         None
         """
-        self.inhabitants["fish"].add(fish)
+        self.fish.add(fish)
 
     def add_plant(self, plant: Plant):
         """
@@ -51,7 +53,7 @@ class Aquarium:
         ---------
         plant: Plant
         """
-        self.inhabitants["plants"].add(plant)
+        self.plants.add(plant)
 
     def water_change(self, litres):
         if litres > self.volume:
@@ -72,19 +74,16 @@ class Aquarium:
         return new_quality_numerator / new_quality_denominator
 
     def feed(self):
-        if len(self.inhabitants["fish"]) == 0:
+        if len(self.fish) == 0:
             self.start_cycle = datetime.datetime.now()
         else:
-            for fish in self.inhabitants["fish"]:
-                if fish.starving:
-                    fish.death_rate -= 0.22
-                    fish.starving = False
-                fish.hunger = 10
+            for fish in self.fish:
+                fish.hunger += 6
 
     def monitor_water(self):
         water_quality_decrement_multiplier = 1
 
-        if len(self.inhabitants["plants"]) > 0:
+        if len(self.plants) > 0:
             water_quality_decrement_multiplier = 0.5
 
         if not self.cycled:
@@ -148,7 +147,7 @@ class Aquarium:
                 self.monitor_water()
 
             # check if the length of set is greater than 0
-            fish_set = self.inhabitants["fish"]
+            fish_set = self.fish
             if len(fish_set) > 0:
                 self.monitor_fish(fish_set)
 
