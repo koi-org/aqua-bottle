@@ -76,7 +76,10 @@ class Aquarium:
             self.start_cycle = datetime.datetime.now()
         else:
             for fish in self.inhabitants["fish"]:
-                fish.fed = True
+                if fish.starving:
+                    fish.death_rate -= 0.22
+                    fish.starving = False
+                fish.hunger = 10
 
     def monitor_water(self):
         water_quality_decrement_multiplier = 1
@@ -91,6 +94,24 @@ class Aquarium:
 
         if self.water_quality < 0:
             self.water_quality = 0
+
+    def monitor_hp(self, fish_set):
+        for fish in fish_set:
+            # check water quality
+            if 50 <= self.water_quality < 70:
+                fish.hp -= 0.5
+            elif self.water_quality < 50:
+                fish.hp -= 1
+
+            # check hunger
+            if 5 <= fish.hunger <= 7:
+                fish.hp -= 0.5
+            elif 0 < fish.hunger < 5:
+                fish.hp -= 1
+            elif fish.hunger == 0:
+                # fish is starving, add death penalty to the fish
+                fish.death_rate += 0.33
+                fish.starving = True
 
     def add_decoration(self, decoration: Decoration):
         self.decoration.add(decoration)
@@ -108,6 +129,12 @@ class Aquarium:
                 if current_time - self.start_cycle > datetime.timedelta(seconds=15):
                     self.cycled = True
                 self.monitor_water()
+
+            # check if the length of set is greater than 0
+            fish_set = self.inhabitants["fish"]
+            if len(fish_set) > 0:
+                
+
 
             time.sleep(Aquarium.TIME_UNIT)
 

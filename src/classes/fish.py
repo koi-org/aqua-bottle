@@ -12,6 +12,8 @@ class Fish:
                 gender of the fish
             age: int
                 age of the person
+            hp: int
+                hp of a fish
 
         Methods
         ------
@@ -20,7 +22,9 @@ class Fish:
         self.species = species
         self.gender = gender
         self.age = age_months
-        self.fed = False
+        self.hunger = 10
+        self.hp = 100
+        self.death_rate = 0
 
     def __str__(self):
         return (
