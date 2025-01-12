@@ -118,7 +118,7 @@ class AquariumCommands(commands.Cog):
             await ctx.respond("Aquarium does not exist")
             return
 
-        if len(aquarium.inhabitants["fish"]) == 0:
+        if len(aquarium.fish) == 0:
             await ctx.respond("No fish in aquarium, starting nitrogen cycle")
         else:
             await ctx.respond("Fed fish")
