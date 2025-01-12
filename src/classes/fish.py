@@ -28,7 +28,7 @@ class Fish:
         self.lifespan = 720
         self.alive: bool = True
 
-    def judgement(self, water_quality: float):
+    def update(self, water_quality: float):
             # check water quality
             self.age += 1
 
@@ -62,6 +62,11 @@ class Fish:
                 self.survivability -= 0.10
 
     def __str__(self):
-        return (
-            f"specie: {self.species} gender: {self.gender} age (in months): {self.age} "
-        )
+        return (f"Fish Species: {self.species}\n"
+                f"Gender: {self.gender}\n"
+                f"Age: {self.age} months\n"
+                f"Hunger: {self.hunger}\n"
+                f"Health: {self.hp}%\n"
+                f"Survivability: {self.survivability}%\n"
+                f"Lifespan: {self.lifespan} months\n"
+                f"Alive: {'Yes' if self.alive else 'No'}")
