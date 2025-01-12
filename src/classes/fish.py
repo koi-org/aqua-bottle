@@ -29,6 +29,8 @@ class Fish:
         self.hp: float = 100
         self.survivability = 100
         self.lifespan = int(2 * (Time.YEAR / Time.UNIT))
+        self.mature = False
+        self.reproduce_chance = 0
 
         self.alive: bool = True
         self.starving = False
@@ -36,6 +38,8 @@ class Fish:
     def update(self, water_quality: float):
         # check water quality
         self.age += 1
+        if self.mature:
+            self.reproduce_chance += 5
 
         if self.hunger > 0:
             self.hunger -= 1
@@ -60,6 +64,8 @@ class Fish:
 
         curr_age_percent = (self.age / self.lifespan) * 100
 
+        if 40 <= curr_age_percent < 50:
+            self.mature = True
         if 50 <= curr_age_percent < 60:
             self.survivability -= 2
         elif 60 <= curr_age_percent < 70:
@@ -84,6 +90,8 @@ class Fish:
             f"Age: {self.age} days\n"
             f"Hunger: {self.hunger}\n"
             f"Health: {self.hp}%\n"
+            f"Ready to breed: {self.mature}"
+            f"Readiness to breed: {self.reproduce_chance}"
             f"Survivability: {self.survivability}%\n"
             f"Lifespan: {int(self.lifespan / 30)} months\n"
             f"Alive: {'Yes' if self.alive else 'No'}"

@@ -1,7 +1,7 @@
 from classes.fish import Fish
 from classes.plant import Plant
 from classes.decoration import Decoration
-from constants import Time
+from constants import Time, Valid
 from typing import Set
 import datetime
 import threading
@@ -102,15 +102,45 @@ class Aquarium:
             self.water_quality = 0
 
     def monitor_fish(self):
+        breeding_fish = set()
         for fish in list(self.fish):
             fish.update(self.water_quality)
 
-    def purge_fish(self):
-        for fish in list(self.fish):
+            # check if they can reproduce
+            if fish.mature and random.randint(1, 100) <= fish.reproduce_chance:
+                # add the fish into the set if they can reproduce
+                breeding_fish.add(fish)
+
             if not fish.alive:
                 print("Fish has been removed!")
-                self.fish.discard(fish)
-                # discard fish
+                self.fish.remove(fish)
+                breeding_fish.discard(fish)
+
+        self.breed(breeding_fish)
+
+    def breed(self, fishes):
+        parents = {
+            "mother": None,
+            "father": None,
+        }
+
+        for fish in list(fishes):
+            if not parents["mother"] and fish.gender == "Female":
+                parents["mother"] = fish
+            elif not parents["father"] and fish.gender == "Male":
+                parents["father"] = fish
+
+        if parents["mother"] and parents["father"]:
+            gender = list(Valid.GENDERS)[random.randint(0, 1)]
+            species = parents["mother"].species
+            baby = Fish(species, gender, 0)
+            self.add_fish(baby)
+
+            parents["mother"].reproduce_chance = 20
+            parents["father"].reproduce_chance = 20
+
+            fishes.remove(parents["mother"])
+            fishes.remove(parents["father"])
 
     def add_decoration(self, decoration: Decoration):
         self.decoration.add(decoration)
@@ -125,7 +155,6 @@ class Aquarium:
 
             self.monitor_water(current_time)
             self.monitor_fish()
-            self.purge_fish()
 
             time.sleep(Time.UNIT)
 

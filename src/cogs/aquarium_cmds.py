@@ -166,7 +166,7 @@ class AquariumCommands(commands.Cog):
         self,
         ctx: discord.ApplicationContext,
         species: str = discord.Option(str, choices=Valid.FISH),
-        gender: str = discord.Option(choices=["Male", "Female"]),
+        gender: str = discord.Option(choices=Valid.GENDERS),
         age: int = 0,
     ):
         # check if user exists
