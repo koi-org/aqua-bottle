@@ -79,7 +79,8 @@ class Aquarium:
                 fish.hunger += 6
 
     def monitor_water(self, current_time: datetime):
-        if not self.start_cycle: return
+        if not self.start_cycle:
+            return
 
         if current_time - self.start_cycle > datetime.timedelta(seconds=15):
             self.cycled = True
@@ -99,7 +100,8 @@ class Aquarium:
 
     def monitor_fish(self):
         if len(self.fish) > 0:
-            for fish in self.fish: fish.update(self.water_quality)
+            for fish in self.fish:
+                fish.update(self.water_quality)
 
     def add_decoration(self, decoration: Decoration):
         self.decoration.add(decoration)
@@ -126,10 +128,7 @@ class Aquarium:
         )
 
         for fish in self.fish:
-            print(
-                f"{fish}\n"
-                f"---\n"
-            )
+            print(f"{fish}\n" f"---\n")
 
     def stop(self):
         self.running = False

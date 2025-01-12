@@ -4,6 +4,7 @@ class Valid:
     PLANTS = {"Java Fern", "Java Moss", "Anubias"}
     DECORATIONS = {"Driftwood", "Rock"}
 
+
 class Time:
     UNIT = 5
     MONTH = UNIT * 30

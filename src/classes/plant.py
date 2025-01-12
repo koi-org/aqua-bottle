@@ -1,6 +1,4 @@
 class Plant:
-
-
     """
     Represents a plant species.
 
