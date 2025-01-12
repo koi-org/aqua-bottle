@@ -1,6 +1,7 @@
 from classes.fish import Fish
 from classes.plant import Plant
 from classes.decoration import Decoration
+from constants import Time
 from typing import Set
 import datetime
 import threading
@@ -8,11 +9,6 @@ import time
 
 
 class Aquarium:
-    VALID_SUBSTRATE = {"Gravel", "Sand", "Soil"}
-    VALID_DECORATION = {"driftwood", "rock"}
-    TIME_UNIT = 5
-    MONTH = TIME_UNIT * 30
-    YEAR = MONTH * 12
 
     def __init__(self, channel_id: int, volume: int, substrate: str):
         self.channel_id = channel_id
@@ -113,13 +109,13 @@ class Aquarium:
             current_time = datetime.datetime.now()
 
             delta = current_time - self.birth_date
-            self.age = int(delta.total_seconds() // Aquarium.TIME_UNIT)
+            self.age = int(delta.total_seconds() // Time.UNIT)
             self.debug_timer()
 
             self.monitor_water(current_time)
             self.monitor_fish()
 
-            time.sleep(Aquarium.TIME_UNIT)
+            time.sleep(Time.UNIT)
 
     def debug_timer(self):
         print(

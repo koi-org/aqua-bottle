@@ -1,5 +1,6 @@
+from constants import Time
+
 class Fish:
-    VALID_FISH = {"Guppy", "Neon Tetra", "Molly", "Platy"}
 
     def __init__(self, species: str, gender: str, months: int):
         """
@@ -25,7 +26,7 @@ class Fish:
         self.hunger: int = 10
         self.hp: float = 100
         self.survivability = 100
-        self.lifespan = 720
+        self.lifespan = 2 * Time.YEAR
         self.alive: bool = True
 
     def update(self, water_quality: float):
