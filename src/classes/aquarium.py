@@ -78,6 +78,8 @@ class Aquarium:
         else:
             for fish in self.fish:
                 fish.hunger += 6
+                if fish.hunger > 10:
+                    fish.hunger = 10
 
     def monitor_water(self, current_time: datetime):
         if not self.start_cycle:

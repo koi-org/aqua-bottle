@@ -24,11 +24,12 @@ class Fish:
         """
         self.species = species
         self.gender = gender
-        self.age = months * Time.MONTH
+        self.age = months * 30
         self.hunger: int = 10
         self.hp: float = 100
         self.survivability = 100
-        self.lifespan = 2 * Time.YEAR
+        self.lifespan = int(2 * (Time.YEAR / Time.UNIT))
+
         self.alive: bool = True
         self.starving = False
 
@@ -57,19 +58,19 @@ class Fish:
             self.survivability += 20
             self.starving = False
 
-        self.age = (self.age / self.lifespan) * 100
+        curr_age_percent = (self.age / self.lifespan) * 100
 
-        if 50 <= self.age < 60:
+        if 50 <= curr_age_percent < 60:
             self.survivability -= 2
-        elif 60 <= self.age < 70:
+        elif 60 <= curr_age_percent < 70:
             self.survivability -= 3
-        elif 70 <= self.age < 80:
+        elif 70 <= curr_age_percent < 80:
             self.survivability -= 4
-        elif 80 <= self.age < 90:
+        elif 80 <= curr_age_percent < 90:
             self.survivability -= 5
-        elif 90 <= self.age < 100:
+        elif 90 <= curr_age_percent < 100:
             self.survivability -= 6
-        elif self.age > 100:
+        elif curr_age_percent > 100:
             self.survivability -= 10
 
         chance_to_die = 100 - self.survivability
@@ -80,10 +81,10 @@ class Fish:
         return (
             f"Fish Species: {self.species}\n"
             f"Gender: {self.gender}\n"
-            f"Age: {self.age} months\n"
+            f"Age: {self.age} days\n"
             f"Hunger: {self.hunger}\n"
             f"Health: {self.hp}%\n"
             f"Survivability: {self.survivability}%\n"
-            f"Lifespan: {self.lifespan} months\n"
+            f"Lifespan: {int(self.lifespan / 30)} months\n"
             f"Alive: {'Yes' if self.alive else 'No'}"
         )
