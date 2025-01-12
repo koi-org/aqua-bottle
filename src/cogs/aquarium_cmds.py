@@ -4,6 +4,7 @@ from classes.manager import Manager
 from classes.aquarium import Aquarium
 from classes.fish import Fish
 from classes.plant import Plant
+from constants import Valid
 
 
 class AquariumCommands(commands.Cog):
@@ -34,7 +35,7 @@ class AquariumCommands(commands.Cog):
     async def create(
         self,
         ctx: discord.ApplicationContext,
-        substrate: str = discord.Option(str, choices=Aquarium.VALID_SUBSTRATE),
+        substrate: str = discord.Option(str, choices=Valid.SUBSTRATE),
         volume: int = 50,
     ):
         """
@@ -164,7 +165,7 @@ class AquariumCommands(commands.Cog):
     async def add_fish(
         self,
         ctx: discord.ApplicationContext,
-        species: str = discord.Option(str, choices=Fish.VALID_FISH),
+        species: str = discord.Option(str, choices=Valid.FISH),
         gender: str = discord.Option(choices=["Male", "Female"]),
         age: int = 0,
     ):
@@ -198,7 +199,7 @@ class AquariumCommands(commands.Cog):
     async def add_plant(
         self,
         ctx: discord.ApplicationContext,
-        species: str = discord.Option(str, choices=Plant.VALID_PLANTS),
+        species: str = discord.Option(str, choices=Valid.PLANTS),
     ):
         # check if user exists
         user_id = ctx.author.id
