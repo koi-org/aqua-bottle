@@ -6,6 +6,7 @@ from typing import Set
 import datetime
 import threading
 import time
+import random
 
 
 class Aquarium:
@@ -99,9 +100,15 @@ class Aquarium:
             self.water_quality = 0
 
     def monitor_fish(self):
-        if len(self.fish) > 0:
-            for fish in self.fish:
-                fish.update(self.water_quality)
+        for fish in list(self.fish):
+            fish.update(self.water_quality)
+
+    def purge_fish(self):
+        for fish in list(self.fish):
+            if not fish.alive:
+                print("Fish has been removed!")
+                self.fish.discard(fish)
+                # discard fish
 
     def add_decoration(self, decoration: Decoration):
         self.decoration.add(decoration)
@@ -116,6 +123,7 @@ class Aquarium:
 
             self.monitor_water(current_time)
             self.monitor_fish()
+            self.purge_fish()
 
             time.sleep(Time.UNIT)
 
