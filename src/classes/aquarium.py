@@ -82,7 +82,12 @@ class Aquarium:
             for fish in self.fish:
                 fish.hunger += 6
 
-    def monitor_water(self):
+    def monitor_water(self, current_time: datetime):
+        if not self.start_cycle: return
+
+        if current_time - self.start_cycle > datetime.timedelta(seconds=15):
+            self.cycled = True
+
         water_quality_decrement_multiplier = 1
 
         if len(self.plants) > 0:
@@ -98,7 +103,7 @@ class Aquarium:
 
     def monitor_fish(self):
         if len(self.fish) > 0:
-            for fish in self.fish: fish.judgement()
+            for fish in self.fish: fish.update(self.water_quality)
 
     def add_decoration(self, decoration: Decoration):
         self.decoration.add(decoration)
@@ -111,13 +116,7 @@ class Aquarium:
             self.age = int(delta.total_seconds() // Aquarium.TIME_UNIT)
             self.debug_timer()
 
-            # monitor water
-            if self.start_cycle:
-                if current_time - self.start_cycle > datetime.timedelta(seconds=15):
-                    self.cycled = True
-                self.monitor_water()
-
-            # monitor fish
+            self.monitor_water(current_time)
             self.monitor_fish()
 
             time.sleep(Aquarium.TIME_UNIT)
@@ -129,6 +128,12 @@ class Aquarium:
             f"Water quality: {self.water_quality}\n"
             f"---"
         )
+
+        for fish in self.fish:
+            print(
+                f"{fish}\n"
+                f"---\n"
+            )
 
     def stop(self):
         self.running = False
