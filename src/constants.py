@@ -7,6 +7,6 @@ class Valid:
 
 
 class Time:
-    UNIT = 5
-    MONTH = UNIT * 30
-    YEAR = MONTH * 12
+    UNIT: int = 5
+    MONTH: int = UNIT * 30
+    YEAR: int = MONTH * 12

@@ -106,15 +106,14 @@ class Aquarium:
         for fish in list(self.fish):
             fish.update(self.water_quality)
 
+            if not fish.alive:
+                print("Fish has been removed!")
+                self.fish.remove(fish)
+
             # check if they can reproduce
             if fish.mature and random.randint(1, 100) <= fish.reproduce_chance:
                 # add the fish into the set if they can reproduce
                 breeding_fish.add(fish)
-
-            if not fish.alive:
-                print("Fish has been removed!")
-                self.fish.remove(fish)
-                breeding_fish.discard(fish)
 
         self.breed(breeding_fish)
 
@@ -136,12 +135,6 @@ class Aquarium:
             baby = Fish(species, gender, 0)
             self.add_fish(baby)
 
-            parents["mother"].reproduce_chance = 20
-            parents["father"].reproduce_chance = 20
-
-            fishes.remove(parents["mother"])
-            fishes.remove(parents["father"])
-
     def add_decoration(self, decoration: Decoration):
         self.decoration.add(decoration)
 
@@ -159,6 +152,7 @@ class Aquarium:
             time.sleep(Time.UNIT)
 
     def debug_timer(self):
+        # Aquarium info
         print(
             f"The aquarium in channel: {self.channel_id} is {self.age} time units old.\n"
             f"Cycled? {self.cycled}\n"
@@ -166,6 +160,7 @@ class Aquarium:
             f"---"
         )
 
+        # Fish info
         for fish in self.fish:
             print(f"{fish}\n" f"---\n")
 

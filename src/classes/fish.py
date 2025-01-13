@@ -79,8 +79,7 @@ class Fish:
         elif curr_age_percent > 100:
             self.survivability -= 10
 
-        chance_to_die = 100 - self.survivability
-        if random.randint(1, 100) <= chance_to_die:  # Use 1-100 for percentages
+        if random.randint(1, 100) > self.survivability:
             self.alive = False
 
     def __str__(self):
