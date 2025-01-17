@@ -98,35 +98,6 @@ class AquariumCommands(commands.Cog):
             await ctx.respond("Aquarium successfully removed!")
 
     @aquarium.command(
-        name="feed",
-        description="Feed fish",
-        guild_ids=[692964332643942463],
-    )
-    async def feed_fish(self, ctx: discord.ApplicationContext):
-        user_id = ctx.author.id
-        channel_id = ctx.channel.id
-        user = Manager.get_user(user_id)
-
-        # Check if user is valid
-        if user is None:
-            await ctx.respond(
-                "You are not a valid user, please register before creating an aquarium!"
-            )
-            return
-
-        aquarium = user.get_aquarium(channel_id)
-        if aquarium is None:
-            await ctx.respond("Aquarium does not exist")
-            return
-
-        if len(aquarium.fish) == 0:
-            await ctx.respond("No fish in aquarium, starting nitrogen cycle")
-        else:
-            await ctx.respond("Fed fish")
-
-        aquarium.feed()
-
-    @aquarium.command(
         name="water_change",
         description="do a water change",
         guild_ids=[692964332643942463],
@@ -190,6 +161,35 @@ class AquariumCommands(commands.Cog):
         await ctx.respond(
             f"Fish of species: {species}, gender: {gender}, age: {age} is successfully added!"
         )
+
+    @fish.command(
+        name="feed",
+        description="Feed fish",
+        guild_ids=[692964332643942463],
+    )
+    async def feed_fish(self, ctx: discord.ApplicationContext):
+        user_id = ctx.author.id
+        channel_id = ctx.channel.id
+        user = Manager.get_user(user_id)
+
+        # Check if user is valid
+        if user is None:
+            await ctx.respond(
+                "You are not a valid user, please register before creating an aquarium!"
+            )
+            return
+
+        aquarium = user.get_aquarium(channel_id)
+        if aquarium is None:
+            await ctx.respond("Aquarium does not exist")
+            return
+
+        if len(aquarium.fish) == 0:
+            await ctx.respond("No fish in aquarium, starting nitrogen cycle")
+        else:
+            await ctx.respond("Fed fish")
+
+        aquarium.feed()
 
     @plant.command(
         name="add",
