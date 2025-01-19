@@ -23,7 +23,7 @@ class Manager:
 
     @staticmethod
     def add_user(user_id: int, username: str) -> bool:
-        if user_id in Manager.users:
+        if user_id in Manager.users or user_id < 0:
             return False
 
         new_user = User(username, user_id, 100)
