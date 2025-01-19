@@ -5,6 +5,8 @@ from classes.aquarium import Aquarium
 from classes.fish import Fish
 from classes.plant import Plant
 from constants import Valid
+from datetime import datetime
+from tzlocal import get_localzone
 
 
 class AquariumCommands(commands.Cog):
@@ -26,6 +28,59 @@ class AquariumCommands(commands.Cog):
     aquarium = discord.SlashCommandGroup("aquarium", "Manage your aquarium.")
     fish = aquarium.create_subgroup("fish", "Manage the fish in your aquarium.")
     plant = aquarium.create_subgroup("plant", "Manage the plants in your aquarium.")
+
+    @aquarium.command(
+        name="stats",
+        description="Check your aquarium stats",
+        guild_ids=[692964332643942463],
+    )
+    async def stats(self, ctx: discord.ApplicationContext):
+        await ctx.defer()
+
+        user_id = ctx.author.id
+        channel_id = ctx.channel.id
+        user = Manager.get_user(user_id)
+
+        # Check if user is valid
+        if user is None:
+            await ctx.respond(
+                "You are not a valid user, please register before creating an aquarium!"
+            )
+            return
+
+        aquarium = user.get_aquarium(channel_id)
+        if aquarium is None:
+            await ctx.respond("Aquarium does not exist")
+            return
+
+        # Display stats embed
+        embed = discord.Embed(
+            title=f"{user.name}'s Aquarium",
+            description=f"{aquarium.volume} L",
+            color=discord.Colour.blurple(),
+        )
+
+        embed.add_field(name="A Normal Field", value="A really nice field with some information. **The description as well as the fields support markdown!**", inline=False)
+        embed.add_field(name="Inline Field 1", value="Inline Field 1", inline=False)
+        embed.add_field(name="Inline Field 2", value="Inline Field 2", inline=False)
+        embed.add_field(name="Inline Field 3", value="Inline Field 3", inline=False)
+
+        if aquarium.substrate == "Gravel":
+            image_file = discord.File("src/images/Gravel-aquarium-substrate.jpg", filename="Gravel-aquarium-substrate.jpg")
+        elif aquarium.substrate == "Sand":
+            image_file = discord.File("src/images/Sand-aquarium-substrate.jpg", filename="Sand-aquarium-substrate.jpg")
+        else:
+            image_file = discord.File("src/images/Aquasoil-aquarium-substrate.jpg", filename="Aquasoil-aquarium-substrate.jpg")
+
+        embed.set_image(url=f"attachment://{image_file.filename}")
+
+        local_tz = get_localzone()
+        current_time_local = datetime.now(local_tz).strftime("%Y-%m-%d %H:%M %Z")
+        embed.set_footer(text=f"Time: {current_time_local}")
+        embed.set_author(name="Aquarium Bot", icon_url="")
+        embed.set_thumbnail(url="")
+
+        await ctx.respond("", embed=embed, file=image_file)
 
     @aquarium.command(
         name="create",
