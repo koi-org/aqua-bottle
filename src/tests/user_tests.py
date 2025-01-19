@@ -1,7 +1,6 @@
 from classes.manager import Manager
 
 
-# Use User and Manager together here
 def test_add_user():
     add_user = Manager.add_user(user_id=1, username="bob")
     assert add_user is True
