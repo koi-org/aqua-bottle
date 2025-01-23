@@ -59,7 +59,7 @@ class AquariumCommands(commands.Cog):
         # Display stats embed
         embed = discord.Embed(
             title=f"{user.name}'s Aquarium",
-            description=f"{aquarium.volume} L\nSubstrate: {aquarium.substrate}",
+            description=f"{aquarium.volume} L",
             color=discord.Colour.blurple(),
         )
 
