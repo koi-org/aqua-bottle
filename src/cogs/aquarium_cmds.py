@@ -104,6 +104,12 @@ class AquariumCommands(commands.Cog):
         buffer.seek(0)
         buffer.truncate(0)
 
+        # Decorations
+        for decoration in aquarium.decorations:
+            buffer.write(f"{decoration.type} ")
+        embed.add_field(name="Decorations", value=buffer.getvalue(), inline=False)
+        buffer.seek(0)
+        buffer.truncate(0)
 
         if aquarium.substrate == "Gravel":
             image_file = discord.File("src/images/Gravel-aquarium-substrate.jpg", filename="Gravel-aquarium-substrate.jpg")

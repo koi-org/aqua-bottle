@@ -20,7 +20,7 @@ class Aquarium:
         self.water_quality = 100
         self.fish: Set[Fish] = set()
         self.plants: Set[Plant] = set()
-        self.decoration: Set[Decoration] = set()
+        self.decorations: Set[Decoration] = set()
 
         # timer
         self.birth_date = datetime.datetime.now()
@@ -136,7 +136,7 @@ class Aquarium:
             self.add_fish(baby)
 
     def add_decoration(self, decoration: Decoration):
-        self.decoration.add(decoration)
+        self.decorations.add(decoration)
 
     def update_timer(self):
         while self.running:
