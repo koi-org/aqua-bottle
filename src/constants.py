@@ -2,7 +2,7 @@ class Valid:
     SUBSTRATE = {"Gravel", "Sand", "Soil"}
     FISH = {"Guppy", "Neon Tetra", "Molly", "Platy"}
     PLANTS = {"Java Fern", "Java Moss", "Anubias"}
-    DECORATIONS = {"Driftwood", "Rock"}
+    DECORATIONS = {"Driftwood", "Rock", "Shit"}
     GENDERS = {"Male", "Female"}
 
 

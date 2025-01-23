@@ -4,6 +4,7 @@ from classes.manager import Manager
 from classes.aquarium import Aquarium
 from classes.fish import Fish
 from classes.plant import Plant
+from classes.decoration import Decoration
 from constants import Valid
 from datetime import datetime
 from tzlocal import get_localzone
@@ -29,6 +30,7 @@ class AquariumCommands(commands.Cog):
     aquarium = discord.SlashCommandGroup("aquarium", "Manage your aquarium.")
     fish = aquarium.create_subgroup("fish", "Manage the fish in your aquarium.")
     plant = aquarium.create_subgroup("plant", "Manage the plants in your aquarium.")
+    decoration = aquarium.create_subgroup("decoration", "Manage the decorations in your aquarium.")
 
     @aquarium.command(
         name="stats",
@@ -322,6 +324,35 @@ class AquariumCommands(commands.Cog):
         aquarium.add_plant(Plant(species))
         await ctx.respond(f"Plant of species: {species} is successfully added!")
 
+    @decoration.command(
+        name="add",
+        description="Add decorations to your aquarium!",
+        guild_ids=[692964332643942463],
+    )
+    async def add_decoration(
+        self,
+        ctx: discord.ApplicationContext,
+        type: str = discord.Option(str, choices=Valid.DECORATIONS),
+    ):
+        # check if user exists
+        user_id = ctx.author.id
+        channel_id = ctx.channel.id
+        user = Manager.get_user(user_id)
+
+        if user is None:
+            await ctx.respond(
+                "You are not a valid user, please register before creating an aquarium!"
+            )
+            return
+
+        # check if the aquarium exists
+        aquarium = user.get_aquarium(channel_id)
+        if not aquarium:
+            await ctx.respond("Aquarium does not exist!")
+            return
+
+        aquarium.add_decoration(Decoration(type))
+        await ctx.respond(f"Decoration of type: {type} is successfully added!")
 
 def setup(bot):
     """
