@@ -60,9 +60,13 @@ class AquariumCommands(commands.Cog):
             color=discord.Colour.blurple(),
         )
 
-        embed.add_field(name="A Normal Field", value="A really nice field with some information. **The description as well as the fields support markdown!**", inline=False)
-        embed.add_field(name="Inline Field 1", value="Inline Field 1", inline=False)
-        embed.add_field(name="Inline Field 2", value="Inline Field 2", inline=False)
+        # Cycled
+        if aquarium.cycled is True:
+            cycled = "Yes"
+        else:
+            cycled = "No"
+        embed.add_field(name="Cycled", value=cycled, inline=False)
+
         embed.add_field(name="Inline Field 3", value="Inline Field 3", inline=False)
 
         if aquarium.substrate == "Gravel":
