@@ -106,9 +106,9 @@ class Aquarium:
         for fish in list(self.fish):
             fish.update(self.water_quality)
 
-            if not fish.alive:
-                print("Fish has been removed!")
-                self.fish.remove(fish)
+            # if not fish.alive:
+            #     print("Fish has been removed!")
+            #     self.fish.remove(fish)
 
             # check if they can reproduce
             if fish.mature and random.randint(1, 100) <= fish.reproduce_chance:
