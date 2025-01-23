@@ -76,6 +76,21 @@ class AquariumCommands(commands.Cog):
             water_quality = "Poor"
         embed.add_field(name="Water Quality", value=water_quality, inline=False)
 
+        # Fish
+        fish_buffer = StringIO()
+        for fish in aquarium.fish:
+            if fish.alive is False:
+                condition = "Dead"
+            elif fish.survivability > 89:
+                condition = "Healthy"
+            elif fish.survivability > 69:
+                condition = "Stressed"
+            else:
+                condition = "Critical Condition"
+            fish_buffer.write(f"{fish.species}: {condition}")
+        embed.add_field(name="Fish", value=fish_buffer.getvalue(), inline=False)
+
+
         embed.add_field(name="Inline Field 3", value="Inline Field 3", inline=False)
 
         if aquarium.substrate == "Gravel":
