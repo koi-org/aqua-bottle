@@ -93,6 +93,17 @@ class AquariumCommands(commands.Cog):
         buffer.seek(0)
         buffer.truncate(0)
 
+        # Plants
+        for plant in aquarium.plants:
+            if plant.alive is False:
+                condition = "Dead"
+            else:
+                condition = "Alive"
+            buffer.write(f"{plant.species}: {condition}\n")
+        embed.add_field(name="Plants", value=buffer.getvalue(), inline=False)
+        buffer.seek(0)
+        buffer.truncate(0)
+
 
         if aquarium.substrate == "Gravel":
             image_file = discord.File("src/images/Gravel-aquarium-substrate.jpg", filename="Gravel-aquarium-substrate.jpg")
