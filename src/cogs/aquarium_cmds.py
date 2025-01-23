@@ -67,6 +67,15 @@ class AquariumCommands(commands.Cog):
             cycled = "No"
         embed.add_field(name="Cycled", value=cycled, inline=False)
 
+        # Water Quality
+        if aquarium.water_quality > 69:
+            water_quality = "Good"
+        elif aquarium.water_quality > 49:
+            water_quality = "Moderate"
+        else:
+            water_quality = "Poor"
+        embed.add_field(name="Water Quality", value=water_quality, inline=False)
+
         embed.add_field(name="Inline Field 3", value="Inline Field 3", inline=False)
 
         if aquarium.substrate == "Gravel":
