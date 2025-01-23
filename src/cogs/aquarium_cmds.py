@@ -7,6 +7,7 @@ from classes.plant import Plant
 from constants import Valid
 from datetime import datetime
 from tzlocal import get_localzone
+from io import StringIO
 
 
 class AquariumCommands(commands.Cog):
@@ -77,7 +78,7 @@ class AquariumCommands(commands.Cog):
         embed.add_field(name="Water Quality", value=water_quality, inline=False)
 
         # Fish
-        fish_buffer = StringIO()
+        buffer = StringIO()
         for fish in aquarium.fish:
             if fish.alive is False:
                 condition = "Dead"
@@ -87,11 +88,11 @@ class AquariumCommands(commands.Cog):
                 condition = "Stressed"
             else:
                 condition = "Critical Condition"
-            fish_buffer.write(f"{fish.species}: {condition}")
-        embed.add_field(name="Fish", value=fish_buffer.getvalue(), inline=False)
+            buffer.write(f"{fish.species}: {condition}\n")
+        embed.add_field(name="Fish", value=buffer.getvalue(), inline=False)
+        buffer.seek(0)
+        buffer.truncate(0)
 
-
-        embed.add_field(name="Inline Field 3", value="Inline Field 3", inline=False)
 
         if aquarium.substrate == "Gravel":
             image_file = discord.File("src/images/Gravel-aquarium-substrate.jpg", filename="Gravel-aquarium-substrate.jpg")
