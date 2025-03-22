@@ -23,11 +23,11 @@ class Aquarium:
         self.decorations: Set[Decoration] = set()
 
         # timer
-        self.birth_date = datetime.datetime.now()
-        self.age = 0
-        self.running = True
-        self.timer_thread = threading.Thread(target=self.update_timer)
-        self.timer_thread.start()
+        # self.birth_date = datetime.datetime.now()
+        # self.age = 0
+        # self.running = True
+        # self.timer_thread = threading.Thread(target=self.update_timer)
+        # self.timer_thread.start()
 
     def add_fish(self, fish: Fish):
         """
@@ -138,35 +138,35 @@ class Aquarium:
     def add_decoration(self, decoration: Decoration):
         self.decorations.add(decoration)
 
-    def update_timer(self):
-        while self.running:
-            current_time = datetime.datetime.now()
+    # def update_timer(self):
+    #     while self.running:
+    #         current_time = datetime.datetime.now()
 
-            delta = current_time - self.birth_date
-            self.age = int(delta.total_seconds() // Time.UNIT)
-            self.debug_timer()
+    #         delta = current_time - self.birth_date
+    #         self.age = int(delta.total_seconds() // Time.UNIT)
+    #         self.debug_timer()
 
-            self.monitor_water(current_time)
-            self.monitor_fish()
+    #         self.monitor_water(current_time)
+    #         self.monitor_fish()
 
-            time.sleep(Time.UNIT)
+    #         time.sleep(Time.UNIT)
 
-    def debug_timer(self):
-        # Aquarium info
-        print(
-            f"The aquarium in channel: {self.channel_id} is {self.age} time units old.\n"
-            f"Cycled? {self.cycled}\n"
-            f"Water quality: {self.water_quality}\n"
-            f"---"
-        )
+    # def debug_timer(self):
+    #     # Aquarium info
+    #     print(
+    #         f"The aquarium in channel: {self.channel_id} is {self.age} time units old.\n"
+    #         f"Cycled? {self.cycled}\n"
+    #         f"Water quality: {self.water_quality}\n"
+    #         f"---"
+    #     )
 
-        # Fish info
-        for fish in self.fish:
-            print(f"{fish}\n" f"---\n")
+    #     # Fish info
+    #     for fish in self.fish:
+    #         print(f"{fish}\n" f"---\n")
 
-    def stop(self):
-        self.running = False
-        self.timer_thread.join()
+    # def stop(self):
+    #     self.running = False
+    #     self.timer_thread.join()
 
     def __eq__(self, other):
         if isinstance(other, Aquarium):
