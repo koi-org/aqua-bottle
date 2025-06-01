@@ -3,15 +3,26 @@ from dotenv import load_dotenv
 import discord
 from discord.ext import commands
 import asyncio
+from psycopg_pool import AsyncConnectionPool
 
 intents = discord.Intents.default()
 intents.message_content = True
 
-bot = commands.Bot(command_prefix="!", intents=intents)
+
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 SERVER_ID = os.getenv('DEFAULT_GUILD')
+DATABASE_URI = os.getenv('DATABASE_URI')
+
+pool = AsyncConnectionPool(DATABASE_URI, open=False)
+
+bot = commands.Bot(
+    command_prefix="!",
+    intents=intents,
+    db=pool)
+
+
 
 @bot.hybrid_command()
 async def sync(ctx: commands.Context):
