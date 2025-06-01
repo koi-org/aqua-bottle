@@ -68,6 +68,18 @@ def add_user(userid: str, username: str):
                 print(f"An unexpected error occurred while adding user: {e}")
 
 
+def add_aquarium(aquariumid: int, user_id: str):
+    with pool.connection() as conn:
+        with conn.cursor() as cur:
+            try:
+                print("attempting to insert aquarium")
+                query = 'insert into "Aquariums" (id, "user") values (%s, %s)'
+                cur.execute(query, (aquariumid, user_id))
+                print("inserted aquarium!")
+            except Exception as e:
+                print(e)
+
+
 # --- Main script execution ---
 if __name__ == "__main__":
     print("\n--- Running database operations ---")
@@ -78,7 +90,10 @@ if __name__ == "__main__":
     print("\nAdding users...")
     add_user("1233432", "Bob")
     add_user("9876543", "Alice")
-    add_user("1233432", "Charlie")
+    # add_user("1233432", "Charlie")
+
+    add_aquarium(1, "9876543")
+
 
     print("\n--- Script finished ---")
 
