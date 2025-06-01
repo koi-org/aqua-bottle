@@ -30,7 +30,9 @@ class AquariumCommands(commands.Cog):
     aquarium = discord.SlashCommandGroup("aquarium", "Manage your aquarium.")
     fish = aquarium.create_subgroup("fish", "Manage the fish in your aquarium.")
     plant = aquarium.create_subgroup("plant", "Manage the plants in your aquarium.")
-    decoration = aquarium.create_subgroup("decoration", "Manage the decorations in your aquarium.")
+    decoration = aquarium.create_subgroup(
+        "decoration", "Manage the decorations in your aquarium."
+    )
 
     @aquarium.command(
         name="stats",
@@ -114,11 +116,20 @@ class AquariumCommands(commands.Cog):
         buffer.truncate(0)
 
         if aquarium.substrate == "Gravel":
-            image_file = discord.File("src/images/Gravel-aquarium-substrate.jpg", filename="Gravel-aquarium-substrate.jpg")
+            image_file = discord.File(
+                "src/images/Gravel-aquarium-substrate.jpg",
+                filename="Gravel-aquarium-substrate.jpg",
+            )
         elif aquarium.substrate == "Sand":
-            image_file = discord.File("src/images/Sand-aquarium-substrate.jpg", filename="Sand-aquarium-substrate.jpg")
+            image_file = discord.File(
+                "src/images/Sand-aquarium-substrate.jpg",
+                filename="Sand-aquarium-substrate.jpg",
+            )
         else:
-            image_file = discord.File("src/images/Aquasoil-aquarium-substrate.jpg", filename="Aquasoil-aquarium-substrate.jpg")
+            image_file = discord.File(
+                "src/images/Aquasoil-aquarium-substrate.jpg",
+                filename="Aquasoil-aquarium-substrate.jpg",
+            )
 
         embed.set_image(url=f"attachment://{image_file.filename}")
 
@@ -353,6 +364,7 @@ class AquariumCommands(commands.Cog):
 
         aquarium.add_decoration(Decoration(type))
         await ctx.respond(f"Decoration of type: {type} is successfully added!")
+
 
 def setup(bot):
     """
