@@ -52,8 +52,8 @@ To get a local copy up and running or to host the bot yourself, follow these ste
 
     ```env
     DISCORD_TOKEN=your_discord_bot_token_here
-    DEFAULT_GUILD=your_supabase_project_url_here
-    DATABASE_URI=your_supabase_anon_or_service_key_here
+    DEFAULT_GUILD=your_default_guild
+    DATABASE_URI=database uri
     ```
 
 3.  **Create and Activate Virtual Environment:**
