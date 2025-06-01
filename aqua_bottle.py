@@ -15,12 +15,11 @@ intents.message_content = True
 
 
 TOKEN = os.getenv("DISCORD_TOKEN")
-SERVER_ID = os.getenv("DEFAULT_GUILD") 
+SERVER_ID = os.getenv("DEFAULT_GUILD")
 DATABASE_URI = os.getenv("DATABASE_URI")
 
 
 async def run():
-
 
     if not DATABASE_URI:
         print("Error: DATABASE_URI not found. Make sure it's set in your .env file.")
@@ -32,13 +31,9 @@ async def run():
     pool = AsyncConnectionPool(DATABASE_URI, open=False)
     await pool.open()
 
-    bot = Bot(
-        prefix="!",
-        intents=intents,
-        db=pool
-    )
+    bot = Bot(prefix="!", intents=intents, db=pool)
 
-    @bot.command(name="sync") 
+    @bot.command(name="sync")
     async def sync_commands(ctx: commands.Context):
         await ctx.send("Syncing global commands...")
         try:
@@ -47,18 +42,18 @@ async def run():
         except Exception as e:
             await ctx.send(f"Error syncing commands: {e}")
 
-
     try:
-        await bot.start(TOKEN) 
+        await bot.start(TOKEN)
     except KeyboardInterrupt:
         print("Bot shutting down...")
-    finally: 
-        if 'pool' in locals() and pool:
+    finally:
+        if "pool" in locals() and pool:
             await pool.close()
             print("Database pool closed.")
-        if 'bot' in locals() and bot: 
-            await bot.close() 
+        if "bot" in locals() and bot:
+            await bot.close()
             print("Bot logged out.")
 
-if __name__ == "__main__": 
+
+if __name__ == "__main__":
     asyncio.run(run())
