@@ -1,45 +1,32 @@
 import os
-from dotenv import load_dotenv
+import sys 
+import traceback 
+
 import discord
 from discord.ext import commands
-import asyncio
-from psycopg_pool import AsyncConnectionPool
 
-intents = discord.Intents.default()
-intents.message_content = True
-
-
-load_dotenv()
-TOKEN = os.getenv("DISCORD_TOKEN")
-SERVER_ID = os.getenv("DEFAULT_GUILD")
-DATABASE_URI = os.getenv("DATABASE_URI")
-
-pool = AsyncConnectionPool(DATABASE_URI, open=False)
-
-bot = commands.Bot(command_prefix="!", intents=intents, db=pool)
+class Bot(commands.Bot):
+    def __init__(self, prefix, intents, db, **kwargs):
+        super().__init__(command_prefix=prefix, intents=intents, **kwargs)
+        self.db = db
 
 
-@bot.hybrid_command()
-async def sync(ctx: commands.Context):
-    await ctx.send("Syncing... ")
-    await bot.tree.sync()
+    async def setup_hook(self):
+        print("Running setup_hook...")
+        cogs_dir = "./cogs"
+        if not os.path.isdir(cogs_dir):
+            print(f"Warning: Cogs directory '{cogs_dir}' not found. No cogs will be loaded.")
+            return
+            
+        for filename in os.listdir(cogs_dir):
+            if filename.endswith(".py") and not filename.startswith("_"):
+                try:
+                    await self.load_extension(f"cogs.{filename[:-3]}")
+                    print(f"Successfully loaded cog: cogs.{filename[:-3]}")
+                except commands.ExtensionError as e:
+                    print(f"Failed to load cog cogs.{filename[:-3]}: {e.__class__.__name__} - {e}", file=sys.stderr)
+                    traceback.print_exc()
 
-
-@bot.event
-async def on_ready():
-    print("Bot ready")
-
-
-async def load():
-    for filename in os.listdir("./cogs"):
-        if filename.endswith(".py"):
-            await bot.load_extension(f"cogs.{filename[:-3]}")
-
-
-async def main():
-    async with bot:
-        await load()
-        await bot.start(TOKEN)
-
-
-asyncio.run(main())
+    async def on_ready(self):
+        print(f"Bot ready. Logged in as {self.user} (ID: {self.user.id})")
+        print("------")

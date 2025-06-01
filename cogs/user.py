@@ -17,4 +17,4 @@ class User(commands.Cog):
 
 
 async def setup(bot):
-    await bot.add_cog(User(bot))
+    await bot.add_cog(User(bot, bot.db))

@@ -94,7 +94,6 @@ if __name__ == "__main__":
 
     add_aquarium(1, "9876543")
 
-
     print("\n--- Script finished ---")
 
     if pool:
