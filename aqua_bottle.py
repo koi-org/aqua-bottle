@@ -1,8 +1,8 @@
+import asyncio
 import os
 from dotenv import load_dotenv, find_dotenv
 import discord
 from discord.ext import commands
-import asyncio
 from psycopg_pool import AsyncConnectionPool
 from bot import Bot
 
@@ -20,7 +20,6 @@ DATABASE_URI = os.getenv("DATABASE_URI")
 
 
 async def run():
-
     if not DATABASE_URI:
         print("Error: DATABASE_URI not found. Make sure it's set in your .env file.")
         return

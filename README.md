@@ -77,7 +77,7 @@ To get a local copy up and running or to host the bot yourself, follow these ste
 
 5.  **Run the Bot:**
 `bash
-    python3 bot.py
+    python3 aqua_bottle.py
     `
 <!-- TODO: ADD LATER
 
