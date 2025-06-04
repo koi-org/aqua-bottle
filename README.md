@@ -3,7 +3,7 @@
 Raise and manage your own virtual aquarium full of unique fish directly within Discord! This bot allows users to collect species, feed them, and maintain their aquatic environment.
 
 <p align="center">
-  <img src="https://img.shields.io/badge/python-3.11+-blue.svg" alt="Python 3.11+">
+  <img src="https://img.shields.io/badge/python-3.13+-blue.svg" alt="Python 3.13+">
   <img src="https://img.shields.io/badge/discord.py-vX.Y.Z-7289DA.svg" alt="discord.py">
   <img src="https://img.shields.io/badge/Supabase-GREEN.svg" alt="Supabase">
 </p>
@@ -29,7 +29,7 @@ Aquarium Bot brings a fun and interactive fish-keeping experience to your Discor
 
 This project utilizes the following core technologies:
 
-- [Python 3.11+](https://www.python.org/)
+- [Python 3.13+](https://www.python.org/)
 - [discord.py](https://discordpy.readthedocs.io/en/latest/) - A modern Python library for the Discord API.
 - [Supabase](https://supabase.io/) - An open-source Firebase alternative for database, auth, and realtime subscriptions.
 
@@ -39,7 +39,7 @@ To get a local copy up and running or to host the bot yourself, follow these ste
 
 ### Prerequisites
 
-- Python 3.11 or newer installed.
+- Python 3.13 or newer installed.
 - A Discord Bot Token. Learn how to create a bot and get a token from the [Discord Developer Portal](https://discord.com/developers/applications) and [discord.py documentation](https://discordpy.readthedocs.io/en/latest/discord.html).
 - A Supabase account and project. You will need your **Project URL** and **`anon` public key** (or `service_role` key if appropriate for your bot's backend logic).
 
@@ -76,9 +76,9 @@ To get a local copy up and running or to host the bot yourself, follow these ste
     _(If you add new dependencies later, update your `requirements.txt` with: `pip freeze > requirements.txt`)_
 
 5.  **Run the Bot:**
-`bash
+    ```bash
     python3 aqua_bottle.py
-    `
+    ```
 <!-- TODO: ADD LATER
 
 ## Usage (Bot Commands)
