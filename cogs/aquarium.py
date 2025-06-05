@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+from uuid import uuid4
 
 
 class Aquarium(commands.Cog):
@@ -17,7 +18,25 @@ class Aquarium(commands.Cog):
 
     @discord.app_commands.command(name="create", description="Create aquarium!")
     async def create(self, interaction: discord.Interaction):
-        await interaction.response.send_message("Created aquarium!")
+        user_id = str(interaction.user.id)
+        ret_string = "Created aquarium!"
+        async with self.bot.db.connection() as conn:
+            async with conn.cursor() as cursor:
+                try:
+                    query = 'select * from "Users" where id=%s'
+                    await cursor.execute(query, (user_id,))
+                    res = await cursor.fetchall()
+                    if not res:
+                        ret_string = "User does not exist!"
+                    else:
+                        # TODO: fix bug
+                        query = 'insert into "Aquariums" (id, "user") values (%s, %s)'
+                        await cursor.execute(query, (uuid4(), user_id))
+                        conn.commit()
+                except Exception as e:
+                    print("error", e)
+
+        await interaction.response.send_message(ret_string)
 
     @discord.app_commands.command(name="feed", description="Feed fish")
     async def feed(self, interaction: discord.Interaction):
