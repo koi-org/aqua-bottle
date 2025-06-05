@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-
+from psycopg.errors import UniqueViolation
 
 class User(commands.Cog):
     def __init__(self, bot, db):
@@ -11,12 +11,14 @@ class User(commands.Cog):
     async def on_ready(self):
         print(f"{__name__} is online!")
 
-    @discord.app_commands.command(name="register", description="Registers user!")
+    user = discord.app_commands.Group(name="user", description="...")
+
+    @user.command(name="register", description="Registers user!")
     async def register(self, interaction: discord.Interaction, input_name:str=''):
         user_id = str(interaction.user.id)
         # User can choose their name, their default name would be their username.
         username = input_name if input_name else str(interaction.user)
-        return_status = "Registered!"
+        return_status = "Unexpected error occured"
 
         async with self.bot.db.connection() as conn:
             async with conn.cursor() as cursor:
@@ -24,13 +26,12 @@ class User(commands.Cog):
                     await cursor.execute('insert into "Users" (id, username) values (%s, %s)',
                                    (user_id, username,))
                     await conn.commit()
-                    # debugging
-                    print("User successfully registered!")
+                    return_status = "User successfully registered!"
+                except UniqueViolation:
+                    return_status = "User already exists"
                 except Exception as e:
-                    error_string = "User already exists"
                     # debugging
                     print("Error: ", e)
-                    return_status = error_string
 
         await interaction.response.send_message(return_status)
 

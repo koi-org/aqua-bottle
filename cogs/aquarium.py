@@ -1,12 +1,15 @@
 import discord
 from discord.ext import commands
 from uuid import uuid4
+from psycopg.errors import UniqueViolation, ForeignKeyViolation
 
 
 class Aquarium(commands.Cog):
     def __init__(self, bot, db):
         self.bot = bot
         self.db = db
+
+    aquarium = discord.app_commands.Group(name="bottle", description="...")
 
     @commands.Cog.listener()
     async def on_ready(self):
@@ -16,29 +19,23 @@ class Aquarium(commands.Cog):
     async def stats(self, interaction: discord.Interaction):
         await interaction.response.send_message("Reveal stats!")
 
-    @discord.app_commands.command(name="create", description="Create aquarium!")
+    @aquarium.command(name="create", description="Create aquarium!")
     async def create(self, interaction: discord.Interaction):
         user_id = str(interaction.user.id)
-        ret_string = "Created aquarium!"
+        ret_string = "Unexpected error occured."
         async with self.bot.db.connection() as conn:
             async with conn.cursor() as cursor:
-                # check that User exists
                 try:
-                    query = 'select * from "Users" where id=%s'
-                    await cursor.execute(query, (user_id,))
-                    res = await cursor.fetchall()
-
-                    # User does not exist
-                    if not res:
-                        ret_string = "User does not exist!"
-                    else:
-                        # TODO: fix bug
-                        query = 'insert into "Aquariums" (id, "user") values (%s, %s)'
-                        await cursor.execute(query, (uuid4(), user_id))
-                        await conn.commit()
+                    query = 'insert into "Aquariums" (id, "user") values (%s, %s)'
+                    await cursor.execute(query, (uuid4(), user_id))
+                    await conn.commit()
+                    ret_string = "Your aquarium has been successfully created!"
+                except UniqueViolation:
+                    ret_string = "User already has an aquarium"
+                except ForeignKeyViolation:
+                    ret_string = "User not found"
                 except Exception as e:
                     print("error", e)
-        print("Aquarium successfully created!")
         await interaction.response.send_message(ret_string)
 
     @discord.app_commands.command(name="feed", description="Feed fish")
