@@ -22,20 +22,23 @@ class Aquarium(commands.Cog):
         ret_string = "Created aquarium!"
         async with self.bot.db.connection() as conn:
             async with conn.cursor() as cursor:
+                # check that User exists
                 try:
                     query = 'select * from "Users" where id=%s'
                     await cursor.execute(query, (user_id,))
                     res = await cursor.fetchall()
+
+                    # User does not exist
                     if not res:
                         ret_string = "User does not exist!"
                     else:
                         # TODO: fix bug
                         query = 'insert into "Aquariums" (id, "user") values (%s, %s)'
                         await cursor.execute(query, (uuid4(), user_id))
-                        conn.commit()
+                        await conn.commit()
                 except Exception as e:
                     print("error", e)
-
+        print("Aquarium successfully created!")
         await interaction.response.send_message(ret_string)
 
     @discord.app_commands.command(name="feed", description="Feed fish")
