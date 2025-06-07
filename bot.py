@@ -33,5 +33,6 @@ class Bot(commands.Bot):
                     traceback.print_exc()
 
     async def on_ready(self):
+        assert self.user is not None
         print(f"Bot ready. Logged in as {self.user} (ID: {self.user.id})")
         print("------")

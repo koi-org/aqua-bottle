@@ -69,6 +69,7 @@ def add_user(userid: str, username: str):
 
 
 def add_aquarium(aquariumid: int, user_id: str):
+    assert pool is not None
     with pool.connection() as conn:
         with conn.cursor() as cur:
             try:
