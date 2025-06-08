@@ -57,11 +57,10 @@ class User(commands.Cog):
         embed = discord.Embed(
             title="User Profile",
             description="Here’s your current info:",
-            color=discord.Color.blurple()
+            color=discord.Color.og_blurple()
         )
         embed.add_field(name="Username", value=f"`{username}`", inline=False)
         embed.add_field(name="Currency", value=f"`{currency}` coins", inline=False)
-        embed.add_field(name="Channel ID", value=f"`{channel_id}`", inline=False)
         embed.set_thumbnail(url=interaction.user.display_avatar.url)
         embed.set_footer(text="aqua bottle")
 
