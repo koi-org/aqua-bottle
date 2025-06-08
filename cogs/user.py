@@ -39,7 +39,6 @@ class User(commands.Cog):
     @user.command(name="profile", description="Show user profile and currency info")
     async def profile(self, interaction: discord.Interaction):
         user_id = str(interaction.user.id)
-        channel_id = interaction.channel_id  # Current Discord channel ID
         username = interaction.user.name  # Or pull from DB if custom name
         currency = 0  # Default fallback, or pull from DB
 
