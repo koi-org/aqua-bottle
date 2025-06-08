@@ -23,8 +23,8 @@ class User(commands.Cog):
         async with self.bot.db.connection() as conn:
             async with conn.cursor() as cursor:
                 try:
-                    await cursor.execute('insert into "Users" (id, username) values (%s, %s)',
-                                   (user_id, username,))
+                    await cursor.execute('insert into "Users" (id, username, currency) values (%s, %s, %s)',
+                                   (user_id, username, 1000))
                     await conn.commit()
                     return_status = "User successfully registered!"
                 except UniqueViolation:
@@ -32,8 +32,40 @@ class User(commands.Cog):
                 except Exception as e:
                     # debugging
                     print("Error: ", e)
+                    return_status = "An internal error occurred. Please try again later."
 
         await interaction.response.send_message(return_status)
+
+    @user.command(name="profile", description="Show user profile and currency info")
+    async def profile(self, interaction: discord.Interaction):
+        user_id = str(interaction.user.id)
+        channel_id = interaction.channel_id  # Current Discord channel ID
+        username = interaction.user.name  # Or pull from DB if custom name
+        currency = 0  # Default fallback, or pull from DB
+
+        async with self.bot.db.connection() as conn:
+            async with conn.cursor() as cursor:
+                await cursor.execute(
+                    'SELECT username, currency FROM "Users" WHERE id = %s',
+                    (user_id,)
+                )
+                result = await cursor.fetchone()
+                if result:
+                    username, currency = result
+
+        # Create the embed
+        embed = discord.Embed(
+            title="User Profile",
+            description="Here’s your current info:",
+            color=discord.Color.blurple()
+        )
+        embed.add_field(name="Username", value=f"`{username}`", inline=False)
+        embed.add_field(name="Currency", value=f"`{currency}` coins", inline=False)
+        embed.add_field(name="Channel ID", value=f"`{channel_id}`", inline=False)
+        embed.set_thumbnail(url=interaction.user.display_avatar.url)
+        embed.set_footer(text="aqua bottle")
+
+        await interaction.response.send_message(embed=embed)
 
 
 async def setup(bot):
