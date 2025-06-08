@@ -24,5 +24,23 @@ class Biomes(commands.Cog):
         )
         embed.add_field(name="Fish Species", value=", ".join(fish_list), inline=False)
         await interaction.response.send_message(embed=embed)
+
+    @biomes.command(name="fish", description="Show detailed info about a fish")
+    @app_commands.describe(fish_name="Name of the fish to lookup")
+    async def fish(self, interaction: discord.Interaction, fish_name: str):
+        fish_info = get_fish_info(fish_name.title())
+        if not fish_info:
+            await interaction.response.send_message(f"❌ No info found for fish named '{fish_name}'.")
+            return
+
+        embed = discord.Embed(
+            title=f"🐟 {fish_name.title()}",
+            description=fish_info.get("description", "No description available."),
+            color=discord.Color.gold()
+        )
+        embed.add_field(name="Rarity", value=fish_info.get("rarity", "Unknown"), inline=True)
+        embed.add_field(name="Average Size", value=f"{fish_info.get('size_cm', '?')} cm", inline=True)
+        await interaction.response.send_message(embed=embed)
+
 async def setup(bot):
     await bot.add_cog(Biomes(bot))
