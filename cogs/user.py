@@ -23,15 +23,21 @@ class User(commands.Cog):
         async with self.bot.db.connection() as conn:
             async with conn.cursor() as cursor:
                 try:
-                    await cursor.execute('insert into "Users" (id, username, currency) values (%s, %s, %s)',
-                                   (user_id, username, 1000))
-                    await conn.commit()
-                    return_status = "User successfully registered!"
-                except UniqueViolation:
-                    return_status = "User already exists"
+                    await cursor.execute('SELECT id FROM "Users" WHERE id = %s', (user_id,))
+                    existing_user = await cursor.fetchone()
+
+                    if existing_user:
+                        return_status = "You are already registered!"
+                    else:
+                        await cursor.execute(
+                            'INSERT INTO "Users" (id, username, currency) VALUES (%s, %s, %s)',
+                            (user_id, username, 1000)
+                        )
+                        await conn.commit()
+                        return_status = "User successfully registered!"
+
                 except Exception as e:
-                    # debugging
-                    print("Error: ", e)
+                    print("Error:", e)
                     return_status = "An internal error occurred. Please try again later."
 
         await interaction.response.send_message(return_status)
