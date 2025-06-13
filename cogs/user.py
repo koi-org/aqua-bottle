@@ -50,13 +50,21 @@ class User(commands.Cog):
 
         async with self.bot.db.connection() as conn:
             async with conn.cursor() as cursor:
-                await cursor.execute(
-                    'SELECT username, currency FROM "Users" WHERE id = %s',
-                    (user_id,)
-                )
-                result = await cursor.fetchone()
-                if result:
-                    username, currency = result
+                try:
+                    await cursor.execute(
+                        'SELECT username, currency FROM "Users" WHERE id = %s',
+                        (user_id,)
+                    )
+                    row = await cursor.fetchone()
+
+                    if not row:
+                        return await interaction.response.send_message("You are not registered! Please use `/user register` to register.")
+
+                    username, currency = row
+
+                except Exception as e:
+                    print("Error:", e)
+                    return await interaction.response.send_message("An internal error occurred. Please try again later.")
 
         # Create the embed
         embed = discord.Embed(
