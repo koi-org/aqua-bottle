@@ -22,19 +22,33 @@ class Fish(commands.Cog):
         ret_string = "Unexpected error occured."
         async with self.bot.db.connection() as conn:
             async with conn.cursor() as cursor:
-                # check if the aquarium exists first
                 try:
+                    # check if the aquarium exists first
                     query = """select id from "Aquariums" where "user"=%s"""
                     await cursor.execute(query, (user_id,))
                     aquarium = await cursor.fetchone()
+
+                    # if aquarium doesn't exist, print out the message
                     if not aquarium:
-                        ret_string = "Aquarium does not exist"
-                        await interaction.response.send_message(ret_string)
+                        await interaction.response.send_message(
+                            "Aquarium does not exist"
+                        )
                         return
-                    
+
                     aquarium_id = aquarium[0]
-                    query = """insert into "Fishes" (id, aquarium, breed, age, gender) values (%s, %s, %s, %s, %s)"""
-                    await cursor.execute(query, (str(uuid4()), aquarium_id, "guppy", 0, "male"))
+                    query = """
+                        insert into "Fishes" (
+                            id,
+                            aquarium,
+                            breed,
+                            age,
+                            gender
+                        ) values (
+                            %s, %s, %s, %s, %s
+                        )"""
+                    await cursor.execute(
+                        query, (str(uuid4()), aquarium_id, "guppy", 0, "male")
+                    )
                     await conn.commit()
                     ret_string = "Fish has been created!"
                 except Exception as e:
