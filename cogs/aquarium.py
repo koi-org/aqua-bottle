@@ -24,6 +24,9 @@ class Aquarium(commands.Cog):
 
     @aquarium.command(name="stats", description="Get aquarium stats")
     async def stats(self, interaction: discord.Interaction):
+        if not await self.is_aquarium_loaded(user_id, interaction.channel.id): # type: ignore
+            await interaction.response.send_message("This is not the loaded channel for your aquarium.", ephemeral=True)
+            return
         await interaction.response.send_message("Reveal stats!")
 
     @aquarium.command(name="create", description="Create aquarium!")
