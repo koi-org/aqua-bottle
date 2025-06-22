@@ -2,7 +2,7 @@ from random import choice
 from uuid import uuid4
 import discord
 from discord.ext import commands
-
+from  game.biome_manager import get_biome_for_channel
 
 class Fish(commands.Cog):
     def __init__(self, bot, db):
@@ -35,6 +35,8 @@ class Fish(commands.Cog):
                         )
                         return
 
+                    biome = get_biome_for_channel(interaction.channel_id)
+                    fish_breed = choice(biome['fish'])
                     aquarium_id = aquarium[0]
                     query = """
                         insert into "Fishes" (
@@ -51,13 +53,13 @@ class Fish(commands.Cog):
                         (
                             str(uuid4()),
                             aquarium_id,
-                            "guppy",
+                            fish_breed,
                             0,
                             choice(["male", "female"]),
                         ),
                     )
                     await conn.commit()
-                    ret_string = "Fish has been created!"
+                    ret_string = f"Fish of {fish_breed} has been created!"
                 except Exception as e:
                     print("error", e)
         await interaction.response.send_message(ret_string)
