@@ -49,6 +49,32 @@ class Aquarium(commands.Cog):
 
         await interaction.response.send_message(ret_string)
 
+    @aquarium.command(name="load", description="Load your aquarium to this channel")
+    async def load(self, interaction: discord.Interaction):
+        if interaction.channel is None or not isinstance(interaction.channel, discord.TextChannel):
+            await interaction.response.send_message(
+                "This command must be used in a server text channel.",
+                ephemeral=True
+            )
+            return
+
+        channel_id = interaction.channel.id
+
+        user_id = str(interaction.user.id)
+        async with self.bot.db.connection() as conn:
+            async with conn.cursor() as cursor:
+                await cursor.execute('SELECT id FROM "Aquariums" WHERE "user" = %s', (user_id,))
+                exists = await cursor.fetchone()
+                if not exists:
+                    await interaction.response.send_message("You don't have an aquarium to load.", ephemeral=True)
+                    return
+
+                await cursor.execute('UPDATE "Aquariums" SET channel_id = %s WHERE "user" = %s',
+                                     (channel_id, user_id))
+                await conn.commit()
+                await interaction.response.send_message(f"Aquarium loaded into <#{channel_id}>!")
+
+
     @discord.app_commands.command(name="feed", description="Feed fish")
     async def feed(self, interaction: discord.Interaction):
         await interaction.response.send_message("Fed fish")
