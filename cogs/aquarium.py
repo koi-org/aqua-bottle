@@ -24,6 +24,14 @@ class Aquarium(commands.Cog):
 
     @aquarium.command(name="stats", description="Get aquarium stats")
     async def stats(self, interaction: discord.Interaction):
+        if interaction.channel is None or not isinstance(interaction.channel, discord.TextChannel):
+            await interaction.response.send_message(
+                "This command must be used in a server text channel.",
+                ephemeral=True
+            )
+            return
+
+        user_id = str(interaction.user.id)
         if not await self.is_aquarium_loaded(user_id, interaction.channel.id): # type: ignore
             await interaction.response.send_message("This is not the loaded channel for your aquarium.", ephemeral=True)
             return
