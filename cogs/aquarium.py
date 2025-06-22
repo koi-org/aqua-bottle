@@ -15,7 +15,14 @@ class Aquarium(commands.Cog):
     async def on_ready(self):
         print(f"{__name__} is online!")
 
-    @discord.app_commands.command(name="stats", description="Get aquarium stats")
+    async def is_aquarium_loaded(self, user_id: str, channel_id: int):
+        async with self.bot.db.connection() as conn:
+            async with conn.cursor() as cursor:
+                await cursor.execute('SELECT channel_id FROM "Aquariums" WHERE "user" = %s', (user_id,))
+                result = await cursor.fetchone()
+                return result and result[0] == channel_id
+
+    @aquarium.command(name="stats", description="Get aquarium stats")
     async def stats(self, interaction: discord.Interaction):
         await interaction.response.send_message("Reveal stats!")
 
