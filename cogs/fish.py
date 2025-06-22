@@ -1,7 +1,7 @@
+from random import choice
+from uuid import uuid4
 import discord
 from discord.ext import commands
-from uuid import uuid4
-from psycopg.errors import UniqueViolation, ForeignKeyViolation
 
 
 class Fish(commands.Cog):
@@ -47,7 +47,14 @@ class Fish(commands.Cog):
                             %s, %s, %s, %s, %s
                         )"""
                     await cursor.execute(
-                        query, (str(uuid4()), aquarium_id, "guppy", 0, "male")
+                        query,
+                        (
+                            str(uuid4()),
+                            aquarium_id,
+                            "guppy",
+                            0,
+                            choice(["male", "female"]),
+                        ),
                     )
                     await conn.commit()
                     ret_string = "Fish has been created!"
