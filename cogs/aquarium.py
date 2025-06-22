@@ -21,21 +21,32 @@ class Aquarium(commands.Cog):
 
     @aquarium.command(name="create", description="Create aquarium!")
     async def create(self, interaction: discord.Interaction):
+        # Check if the interaction is in a valid server text channel
+        if interaction.channel is None or not isinstance(interaction.channel, discord.TextChannel):
+            await interaction.response.send_message(
+                "This command must be used in a server text channel.",
+                ephemeral=True
+            )
+            return
+
         user_id = str(interaction.user.id)
-        ret_string = "Unexpected error occured."
+        channel_id = interaction.channel.id
+        ret_string = "Unexpected error occurred."
+
         async with self.bot.db.connection() as conn:
             async with conn.cursor() as cursor:
                 try:
-                    query = 'insert into "Aquariums" (id, "user") values (%s, %s)'
-                    await cursor.execute(query, (uuid4(), user_id))
+                    query = 'INSERT INTO "Aquariums" (id, "user", channel_id) VALUES (%s, %s, %s)'
+                    await cursor.execute(query, (uuid4(), user_id, channel_id))
                     await conn.commit()
-                    ret_string = "Your aquarium has been successfully created!"
+                    ret_string = f"Aquarium created and loaded in <#{channel_id}>!"
                 except UniqueViolation:
                     ret_string = "User already has an aquarium"
                 except ForeignKeyViolation:
                     ret_string = "User not found"
                 except Exception as e:
                     print("error", e)
+
         await interaction.response.send_message(ret_string)
 
     @discord.app_commands.command(name="feed", description="Feed fish")
