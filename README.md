@@ -41,7 +41,6 @@ To get a local copy up and running or to host the bot yourself, follow these ste
 ### Prerequisites
 
 * **Python 3.13+** installed on your system.
-* **PostgreSQL** installed and running. You can verify this by running `psql -V` in your terminal.
 * A **Discord Bot Token**. Learn how to create a bot and get a token from the [Discord Developer Portal](https://discord.com/developers/applications) and [discord.py documentation](https://discordpy.readthedocs.io/en/latest/discord.html).
 * A **Supabase** account and project. You will need your **Project URL** and **`anon` public key** (or `service_role` key if appropriate for your bot's backend logic).
 
@@ -93,4 +92,4 @@ To get a local copy up and running or to host the bot yourself, follow these ste
 
 ### Troubleshooting:
 
-* If `psql -V` does not return a version, you need to install PostgreSQL on your system. Please check the [PostgreSQL installation guide](https://www.postgresql.org/download/) for instructions specific to your operating system.
+* If you are getting an import error from psycopg, then you need to install PostgreSQL on your system. Please check the [PostgreSQL installation guide](https://www.postgresql.org/download/) for instructions specific to your operating system.
