@@ -10,16 +10,17 @@ Raise and manage your own virtual aquarium full of unique fish directly within D
 
 ## Table of Contents
 
-- [About The Project](#about-the-project)
-- [Built With](#built-with)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation & Configuration](#installation--configuration)
-- [Usage (Bot Commands)](#usage-bot-commands)
-- [Project Structure](#project-structure)
-- [Contributing](#contributing)
-- [License](#license)
-- [Acknowledgements](#acknowledgements)
+* [About The Project](#about-the-project)
+* [Built With](#built-with)
+* [Getting Started](#getting-started)
+
+  * [Prerequisites](#prerequisites)
+  * [Installation & Configuration](#installation--configuration)
+* [Usage (Bot Commands)](#usage-bot-commands)
+* [Project Structure](#project-structure)
+* [Contributing](#contributing)
+* [License](#license)
+* [Acknowledgements](#acknowledgements)
 
 ## About The Project
 
@@ -29,9 +30,9 @@ Aquarium Bot brings a fun and interactive fish-keeping experience to your Discor
 
 This project utilizes the following core technologies:
 
-- [Python 3.13+](https://www.python.org/)
-- [discord.py](https://discordpy.readthedocs.io/en/latest/) - A modern Python library for the Discord API.
-- [Supabase](https://supabase.io/) - An open-source Firebase alternative for database, auth, and realtime subscriptions.
+* [Python 3.13+](https://www.python.org/)
+* [discord.py](https://discordpy.readthedocs.io/en/latest/) - A modern Python library for the Discord API.
+* [Supabase](https://supabase.io/) - An open-source Firebase alternative for database, auth, and realtime subscriptions.
 
 ## Getting Started
 
@@ -39,57 +40,53 @@ To get a local copy up and running or to host the bot yourself, follow these ste
 
 ### Prerequisites
 
-- Python 3.13 or newer installed.
-- A Discord Bot Token. Learn how to create a bot and get a token from the [Discord Developer Portal](https://discord.com/developers/applications) and [discord.py documentation](https://discordpy.readthedocs.io/en/latest/discord.html).
-- A Supabase account and project. You will need your **Project URL** and **`anon` public key** (or `service_role` key if appropriate for your bot's backend logic).
+* **Python 3.13+** installed on your system.
+* A **Discord Bot Token**. Learn how to create a bot and get a token from the [Discord Developer Portal](https://discord.com/developers/applications) and [discord.py documentation](https://discordpy.readthedocs.io/en/latest/discord.html).
+* A **Supabase** account and project. You will need your **Project URL** and **`anon` public key** (or `service_role` key if appropriate for your bot's backend logic).
 
 ### Installation & Configuration
 
-1.  **Clone the repository:**
+1. **Clone the repository:**
 
-2.  **Set up Environment Variables:**
-    Create a `.env` file in the project root directory (where your main bot script is) and add your credentials:
+   ```bash
+   git clone https://github.com/yourusername/aquarium-bot.git
+   cd aquarium-bot
+   ```
 
-    ```env
-    DISCORD_TOKEN=your_discord_bot_token_here
-    DEFAULT_GUILD=your_default_guild
-    DATABASE_URI=database uri
-    ```
+2. **Set up Environment Variables:**
+   Create a `.env` file in the project root directory (where your main bot script is) and add your credentials:
 
-3.  **Create and Activate Virtual Environment:**
+   ```env
+   DISCORD_TOKEN=your_discord_bot_token_here
+   DEFAULT_GUILD=your_default_guild
+   DATABASE_URI=database_uri
+   ```
 
-    ```bash
-    python3 -m venv venv
-    ```
+3. **Install Python with `pyenv` (Recommended):**
 
-    Activate it:
+   If you don’t have `pyenv` installed, follow the instructions on the [pyenv GitHub page](https://github.com/pyenv/pyenv). Once installed, use the following commands to install Python 3.13 and create a virtual environment:
 
-    - Linux/macOS: `source venv/bin/activate`
-    - Windows: `venv\Scripts\activate`
+   ```bash
+   pyenv install 3.13
+   pyenv virtualenv 3.13 aqua-bottle-env
+   pyenv activate aqua-bottle-env
+   ```
 
-4.  **Install Dependencies:**
+4. **Install Dependencies:**
 
-    ```bash
-    pip install -r requirements.txt
-    ```
+   With the virtual environment activated, install the necessary Python packages:
 
-    _(If you add new dependencies later, update your `requirements.txt` with: `pip freeze > requirements.txt`)_
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-5.  **Run the Bot:**
-    ```bash
-    python3 aqua_bottle.py
-    ```
-<!-- TODO: ADD LATER
+   *(If you add new dependencies later, update your `requirements.txt` with: `pip freeze > requirements.txt`)*
 
-## Usage (Bot Commands)
+5. **Run the Bot:**
 
-Interact with your aquarium using the following commands. (Default prefix might be `!`, `?`, or as configured).
+   Finally, run the bot:
 
-- **`[prefix]start`** - Creates your very own aquarium if you don't have one.
-- **`[prefix]collect`** - Try your luck at collecting a new fish!
-- **`[prefix]feed [fish_id/all]`** - Feeds a specific fish or all your fish.
-- **`[prefix]view`** - Displays your current aquarium and its inhabitants.
-- **`[prefix]shop`** - Shows available items or fish to purchase.
-- **`[prefix]help`** - Displays a list of available commands and how to use them.
+   ```bash
+   python3 aqua_bottle.py
+   ```
 
-_[Please replace the above commands, descriptions, and [prefix] with your bot's actual commands and functionality. Be specific!]_ -->
